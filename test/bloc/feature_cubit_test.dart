@@ -18,6 +18,7 @@ void main() {
       'FeaturesCubit emits FeaturesSuccess when feature list is not empty',
       build: () {
         // given
+        when(_repository.getFeatures()).thenAnswer((_) async => [_feature]);
         when(_repository.getFeaturesStream())
             .thenAnswer((_) => Stream.value([_feature]));
 
@@ -27,6 +28,7 @@ void main() {
       expect: () => [
         isInstanceOf<FeaturesLoading>(),
         isInstanceOf<FeaturesSuccess>(),
+        isInstanceOf<FeaturesSuccess>(),
       ],
     );
 
@@ -34,6 +36,7 @@ void main() {
       'FeaturesCubit emits FeaturesEmpty when feature list is empty',
       build: () {
         // given
+        when(_repository.getFeatures()).thenAnswer((_) async => []);
         when(_repository.getFeaturesStream())
             .thenAnswer((_) => Stream.value([]));
 
@@ -43,14 +46,15 @@ void main() {
       expect: () => [
         isInstanceOf<FeaturesLoading>(),
         isInstanceOf<FeaturesEmpty>(),
+        isInstanceOf<FeaturesEmpty>(),
       ],
     );
 
     blocTest(
-      'FeaturesCubit emits FeaturesError when stream error',
+      'FeaturesCubit emits FeaturesError when getFutures error',
       build: () {
         // given
-        when(_repository.getFeaturesStream()).thenThrow(Error());
+        when(_repository.getFeatures()).thenThrow(Error());
 
         return FeaturesCubit(_repository);
       },

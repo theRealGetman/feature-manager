@@ -16,6 +16,14 @@ class FeaturesCubit extends Cubit<FeaturesState> {
     try {
       emit(FeaturesLoading());
 
+      final List<Feature> features = await repository.getFeatures();
+
+      if (features.isNotEmpty) {
+        emit(FeaturesSuccess(features));
+      } else {
+        emit(FeaturesEmpty());
+      }
+
       _listenFeatures();
     } catch (e) {
       print('FeatureManager error >> $e');
