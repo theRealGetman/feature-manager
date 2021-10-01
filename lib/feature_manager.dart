@@ -1,7 +1,5 @@
 library feature_manager;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export 'src/domain/models/feature.dart';
+export 'src/presentation/features_screen.dart';
+export 'src/utils/feature_manager.dart';
