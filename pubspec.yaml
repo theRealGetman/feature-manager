@@ -1,6 +1,8 @@
 name: feature_manager
 description: Feature manager for developer preferences and experiments
 version: 1.0.0
+repository: https://gitlab.com/playseek/feature-manager
+issue_tracker: https://gitlab.com/playseek/feature-manager/-/issues
 authors:
   - "Artem Getman (a.e.getman@gmail.com)"
 
