@@ -6,7 +6,6 @@ class Features {
     title: 'Text pref',
     description: 'This is text preference',
     defaultValue: '',
-    type: FeatureType.feature,
     valueType: FeatureValueType.text,
   );
 
@@ -15,7 +14,6 @@ class Features {
     title: 'Toggle pref',
     description: 'This is toggle preference',
     defaultValue: false,
-    type: FeatureType.feature,
     valueType: FeatureValueType.toggle,
   );
 
@@ -24,15 +22,14 @@ class Features {
     title: 'Number double pref',
     description: 'This is number double preference',
     defaultValue: 0.0,
-    type: FeatureType.feature,
     valueType: FeatureValueType.doubleNumber,
   );
+
   static const Feature integerFeature = Feature(
     key: 'dev-prefs-integer-pref',
     title: 'Number integer pref',
     description: 'This is number integer preference',
     defaultValue: 0,
-    type: FeatureType.feature,
     valueType: FeatureValueType.integerNumber,
   );
 

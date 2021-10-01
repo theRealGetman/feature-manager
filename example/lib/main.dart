@@ -39,12 +39,22 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             FutureBuilder<bool>(
-              initialData: false,
+              initialData: Features.booleanFeature.defaultValue as bool,
               future: featureManager.isEnabled(Features.booleanFeature),
               builder: (BuildContext context, snapshot) {
                 final bool isEnabled = snapshot.data ?? false;
-                return Text(
-                  'Feature toggle ${isEnabled ? 'enabled' : 'disabled'}',
+                return Text.rich(
+                  TextSpan(
+                    text: 'Feature toggle ',
+                    children: <InlineSpan>[
+                      TextSpan(
+                        text: '${isEnabled ? 'enabled' : 'disabled'}',
+                        style: TextStyle(
+                          color: isEnabled ? Colors.green : Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
                 );
               },
             ),

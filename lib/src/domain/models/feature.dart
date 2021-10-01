@@ -1,10 +1,9 @@
 class Feature {
   const Feature({
     required this.key,
-    required this.type,
     required this.valueType,
     required this.title,
-    this.remoteKey = '',
+    this.type = FeatureType.feature,
     this.description = '',
     this.remoteSourceKey = '',
     this.value,
@@ -15,7 +14,6 @@ class Feature {
   final FeatureType type;
   final FeatureValueType valueType;
   final String title;
-  final String remoteKey;
   final String description;
   final String remoteSourceKey;
   final Object? value;
@@ -25,7 +23,6 @@ class Feature {
     String? key,
     FeatureType? type,
     FeatureValueType? valueType,
-    String? remoteKey,
     String? title,
     String? description,
     String? remoteSourceKey,
@@ -36,7 +33,6 @@ class Feature {
       key: key ?? this.key,
       type: type ?? this.type,
       valueType: valueType ?? this.valueType,
-      remoteKey: remoteKey ?? this.remoteKey,
       title: title ?? this.title,
       description: description ?? this.description,
       remoteSourceKey: remoteSourceKey ?? this.remoteSourceKey,
@@ -53,7 +49,6 @@ class Feature {
           key == other.key &&
           type == other.type &&
           valueType == other.valueType &&
-          remoteKey == other.remoteKey &&
           title == other.title &&
           description == other.description &&
           remoteSourceKey == other.remoteSourceKey &&
@@ -65,7 +60,6 @@ class Feature {
       key.hashCode ^
       type.hashCode ^
       valueType.hashCode ^
-      remoteKey.hashCode ^
       title.hashCode ^
       description.hashCode ^
       remoteSourceKey.hashCode ^
@@ -74,7 +68,7 @@ class Feature {
 
   @override
   String toString() {
-    return 'Feature{key: $key, type: $type, valueType: $valueType, remoteKey: $remoteKey, title: $title, description: $description, remoteSourceKey: $remoteSourceKey, value: $value, defaultValue: $defaultValue}';
+    return 'Feature{key: $key, type: $type, valueType: $valueType, title: $title, description: $description, remoteSourceKey: $remoteSourceKey, value: $value, defaultValue: $defaultValue}';
   }
 }
 
