@@ -73,4 +73,5 @@ class Feature {
 }
 
 enum FeatureType { feature, experiment }
-enum FeatureValueType { text, toggle, doubleNumber, integerNumber }
+
+enum FeatureValueType { text, toggle, doubleNumber, integerNumber, json }

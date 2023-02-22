@@ -4,11 +4,15 @@ import 'package:feature_manager/src/domain/models/feature.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FeatureRepository {
-  FeatureRepository(this.featuresList) {
+  FeatureRepository({
+    required this.featuresList,
+    required this.sharedPreferences,
+  }) {
     _featuresStreamController = StreamController<List<Feature>>.broadcast();
   }
 
   final List<Feature> featuresList;
+  final SharedPreferences sharedPreferences;
 
   late StreamController<List<Feature>> _featuresStreamController;
 
@@ -16,8 +20,7 @@ class FeatureRepository {
 
   Future<List<Feature>> getFeatures() async {
     final List<Feature> updatedFeatures = [];
-    final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
+    await sharedPreferences.reload();
 
     for (final Feature feature in featuresList) {
       updatedFeatures.add(
@@ -36,9 +39,6 @@ class FeatureRepository {
     Feature feature,
     Object? value,
   ) async {
-    final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
-
     switch (feature.valueType) {
       case FeatureValueType.toggle:
         await sharedPreferences.setBool(feature.key, value as bool);
@@ -50,6 +50,7 @@ class FeatureRepository {
         await sharedPreferences.setInt(feature.key, value as int);
         break;
       case FeatureValueType.text:
+      case FeatureValueType.json:
         await sharedPreferences.setString(feature.key, value as String);
         break;
     }

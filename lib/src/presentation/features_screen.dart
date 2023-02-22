@@ -4,22 +4,28 @@ import 'package:feature_manager/src/domain/models/feature.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'feature_item.dart';
 
 class DeveloperPreferencesScreen extends StatelessWidget {
-  const DeveloperPreferencesScreen(
-    this.featuresList, {
+  const DeveloperPreferencesScreen({
     Key? key,
+    required this.sharedPreferences,
+    required this.featuresList,
   }) : super(key: key);
 
   final List<Feature> featuresList;
+  final SharedPreferences sharedPreferences;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<FeaturesCubit>(
       create: (BuildContext context) => FeaturesCubit(
-        FeatureRepository(featuresList),
+        FeatureRepository(
+          featuresList: featuresList,
+          sharedPreferences: sharedPreferences,
+        ),
       )..getFeatures(),
       child: _DeveloperPreferencesWidget(),
     );
@@ -77,7 +83,7 @@ class _DeveloperPreferencesWidget extends StatelessWidget {
     return Center(
       child: Text(
         'Error while getting preferences',
-        style: Theme.of(context).textTheme.headline3,
+        style: Theme.of(context).textTheme.displaySmall,
       ),
     );
   }
@@ -86,7 +92,7 @@ class _DeveloperPreferencesWidget extends StatelessWidget {
     return Center(
       child: Text(
         'There are no preferences',
-        style: Theme.of(context).textTheme.headline3,
+        style: Theme.of(context).textTheme.displaySmall,
       ),
     );
   }

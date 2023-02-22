@@ -1,10 +1,29 @@
 import 'package:feature_manager/feature_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 import 'features.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final SharedPreferences sharedPreferences =
+      await SharedPreferences.getInstance();
+  runApp(
+    MultiProvider(
+      providers: [
+        Provider.value(
+          value: sharedPreferences,
+        ),
+        Provider<FeatureManager>(
+          create: (BuildContext context) => FeatureManager(
+            sharedPreferences: context.read(),
+          ),
+        ),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -26,10 +45,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  FeatureManager featureManager = FeatureManager();
-
   @override
   Widget build(BuildContext context) {
+    final bool isEnabled =
+        context.read<FeatureManager>().isEnabled(Features.booleanFeature);
     return Scaffold(
       appBar: AppBar(
         title: Text('Feature Manager Demo Application'),
@@ -38,25 +57,18 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            FutureBuilder<bool>(
-              initialData: Features.booleanFeature.defaultValue as bool,
-              future: featureManager.isEnabled(Features.booleanFeature),
-              builder: (BuildContext context, snapshot) {
-                final bool isEnabled = snapshot.data ?? false;
-                return Text.rich(
+            Text.rich(
+              TextSpan(
+                text: 'Feature toggle ',
+                children: <InlineSpan>[
                   TextSpan(
-                    text: 'Feature toggle ',
-                    children: <InlineSpan>[
-                      TextSpan(
-                        text: '${isEnabled ? 'enabled' : 'disabled'}',
-                        style: TextStyle(
-                          color: isEnabled ? Colors.green : Colors.red,
-                        ),
-                      ),
-                    ],
+                    text: '${isEnabled ? 'enabled' : 'disabled'}',
+                    style: TextStyle(
+                      color: isEnabled ? Colors.green : Colors.red,
+                    ),
                   ),
-                );
-              },
+                ],
+              ),
             ),
             const SizedBox(height: 16.0),
             ElevatedButton(
@@ -66,7 +78,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     .push(
                   MaterialPageRoute(
                     builder: (BuildContext context) =>
-                        DeveloperPreferencesScreen(Features.values),
+                        DeveloperPreferencesScreen(
+                      featuresList: Features.values,
+                      sharedPreferences: context.read(),
+                    ),
                   ),
                 )
                     .then((value) {

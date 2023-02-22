@@ -33,10 +33,19 @@ class Features {
     valueType: FeatureValueType.integerNumber,
   );
 
+  static const Feature jsonFeature = Feature(
+    key: 'dev-prefs-json-pref',
+    title: 'Json pref',
+    description: 'This is json preference',
+    defaultValue: "{value: 'Json default value'}",
+    valueType: FeatureValueType.json,
+  );
+
   static const List<Feature> values = <Feature>[
     Features.textFeature,
     Features.booleanFeature,
     Features.doubleFeature,
     Features.integerFeature,
+    Features.jsonFeature,
   ];
 }

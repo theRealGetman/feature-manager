@@ -87,17 +87,15 @@ Preferable way to create FeatureManager instance is to use DI (Provider, GetIt e
 
 ```dart
 ...
-FutureBuilder<bool>(
-  initialData: Features.booleanFeature.defaultValue as bool,
-  future: featureManager.isEnabled(Features.booleanFeature),
-  builder: (BuildContext context, snapshot) {
-    final bool isEnabled = snapshot.data ?? false;
+final bool isEnabled =
+context.read<FeatureManager>().isEnabled(Features.booleanFeature);
 ...
 ```
 
 #### Modify feature values in DEBUG (develop) mode
 To do it, you can simply open DeveloperPreferences screen in any part of your app.
 You should pass list of your features as parameter for this screen.
+
 P.S. You should hide this button for production builds.
 
 ```dart
@@ -127,7 +125,7 @@ Navigator.of(context).push(
 enum FeatureType { feature, experiment }
 ```
 ```dart
-enum FeatureValueType { text, toggle, doubleNumber, integerNumber }
+enum FeatureValueType { text, toggle, doubleNumber, integerNumber, json }
 ```
 
 ## Todo
@@ -141,7 +139,7 @@ enum FeatureValueType { text, toggle, doubleNumber, integerNumber }
 
 - [ ] Use permanent notification to access dev settings
 
-- [ ] Add sync calls of `isEnabled` and `getValue` for `FeatureManager`
+- [x] Add sync calls of `isEnabled` and `getValue` for `FeatureManager`
 
 ## Contributions
 Feel free to contact me (a.e.getman@gmail.com) or create Merge Requests for this repository :)

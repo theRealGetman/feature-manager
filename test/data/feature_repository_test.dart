@@ -5,11 +5,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   late FeatureRepository _target;
+  late SharedPreferences sharedPreferences;
   List<Feature> _preferencesList = [];
 
   setUp(() async {
     SharedPreferences.setMockInitialValues(<String, Object>{});
-    _target = FeatureRepository(_preferencesList);
+    sharedPreferences = await SharedPreferences.getInstance();
+    _target = FeatureRepository(
+      featuresList: _preferencesList,
+      sharedPreferences: sharedPreferences,
+    );
   });
 
   group('putValue', () {
@@ -27,8 +32,6 @@ void main() {
       await _target.putValue(feature, true);
 
       // then
-      final SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
       final bool? storedValue = sharedPreferences.getBool('key');
       expect(storedValue, true);
     });
@@ -47,8 +50,6 @@ void main() {
       await _target.putValue(feature, 1.1);
 
       // then
-      final SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
       final double? storedValue = sharedPreferences.getDouble('key');
       expect(storedValue, 1.1);
     });
@@ -67,8 +68,6 @@ void main() {
       await _target.putValue(feature, 101);
 
       // then
-      final SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
       final int? storedValue = sharedPreferences.getInt('key');
       expect(storedValue, 101);
     });
@@ -87,8 +86,6 @@ void main() {
       await _target.putValue(feature, 'some text');
 
       // then
-      final SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
       final String? storedValue = sharedPreferences.getString('key');
       expect(storedValue, 'some text');
     });
@@ -129,7 +126,10 @@ void main() {
           valueType: FeatureValueType.integerNumber,
         ),
       ]);
-      _target = FeatureRepository(_preferencesList);
+      _target = FeatureRepository(
+        featuresList: _preferencesList,
+        sharedPreferences: sharedPreferences,
+      );
 
       // when
       final List<Feature> features = await _target.getFeatures();

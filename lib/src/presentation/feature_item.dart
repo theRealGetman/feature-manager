@@ -33,7 +33,7 @@ class _FeatureItemState extends State<_FeatureItem> {
         item.valueType == FeatureValueType.integerNumber) {
       typeSpecificWidget = Text(
         item.value == null ? '${item.defaultValue}' : '${item.value}',
-        style: Theme.of(context).textTheme.bodyText1,
+        style: Theme.of(context).textTheme.bodyLarge,
       );
     } else {
       typeSpecificWidget = const SizedBox();
@@ -44,12 +44,12 @@ class _FeatureItemState extends State<_FeatureItem> {
     return ListTile(
       title: Text(
         item.title,
-        style: Theme.of(context).textTheme.bodyText1,
+        style: Theme.of(context).textTheme.bodyLarge,
       ),
       subtitle: isWithDescription
           ? Text(
               item.description,
-              style: Theme.of(context).textTheme.caption,
+              style: Theme.of(context).textTheme.bodySmall,
             )
           : null,
       trailing: typeSpecificWidget,
@@ -118,13 +118,13 @@ class _FeatureItemState extends State<_FeatureItem> {
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(item.title, style: Theme.of(context).textTheme.bodyText1),
+              Text(item.title, style: Theme.of(context).textTheme.bodyLarge),
               if (isWithDescription)
                 Row(
                   children: <Widget>[
                     Text(
                       item.description,
-                      style: Theme.of(context).textTheme.caption?.copyWith(
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: Colors.grey,
                           ),
                     ),
@@ -141,7 +141,7 @@ class _FeatureItemState extends State<_FeatureItem> {
                 'Save',
                 style: Theme.of(context)
                     .textTheme
-                    .bodyText1
+                    .bodyLarge
                     ?.copyWith(color: Colors.green),
               ),
               onPressed: () {
@@ -165,7 +165,7 @@ class _FeatureItemState extends State<_FeatureItem> {
                 'Cancel',
                 style: Theme.of(context)
                     .textTheme
-                    .bodyText1
+                    .bodyLarge
                     ?.copyWith(color: Colors.red),
               ),
               onPressed: () {
