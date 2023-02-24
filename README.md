@@ -3,7 +3,9 @@
 [![License: MIT](https://img.shields.io/badge/Licence-MIT-success.svg)]
 
 Feature manager allows you to hide some unfinished/secret feature from your users, or experiments, that can be managed
-from remote data source.
+from remote data source or local settings.
+
+If you want to use A/B testing or feature toggling with Firebase Remote Config use [Remote Config Feature Manager](https://pub.dev/packages/remote_config_feature_manager)
 
 ![Example 01](doc/feature-manager-1.png) ![Example 02](doc/feature-manager-2.png)
 
@@ -110,15 +112,15 @@ Navigator.of(context).push(
 ### Feature parameters
 
 
-| Parameter                 |                       Default                       | Description                                                                                                             |
-| :------------------------ | :-------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------- |
-| **key** *String*          |                        required                     | This key will be used to store value in local storage.                                                             |
-| **type** *FeatureType*    |                         `FeatureType.feature`       | It can be used to separate local features and experiments driven by some remote provider. |
-| **valueType** *FeatureValueType*|                         required              |  Type of value of the feature. If you need toggle, use `FeatureValueType.toggle` |
-| **title** *String*        |                          required                   | Title that will be used inside Developer Preferences Screen.     |
-| **remoteSourceKey** *String*|                                                   | TBD. Used to fetch value from remote source. |
-| **description** *String*  |                                                     | Description that will be used inside Developer Preferences Screen. |
-| **value**  *Object?*      |                          Null                       | Stored value of the Feature. Will be fetched from local storage. |
+| Parameter                 |                       Default                       | Description                                                                                  |
+| :------------------------ | :-------------------------------------------------: |:---------------------------------------------------------------------------------------------|
+| **key** *String*          |                        required                     | This key will be used to store value in local storage.                                       |
+| **type** *FeatureType*    |                         `FeatureType.feature`       | It can be used to separate local features and experiments driven by some remote provider.    |
+| **valueType** *FeatureValueType*|                         required              | Type of value of the feature. If you need toggle, use `FeatureValueType.toggle`              |
+| **title** *String*        |                          required                   | Title that will be used inside Developer Preferences Screen.                                 |
+| **remoteSourceKey** *String*|                                                   | Key from remote source.                                                                      |
+| **description** *String*  |                                                     | Description that will be used inside Developer Preferences Screen.                           |
+| **value**  *Object?*      |                          Null                       | Stored value of the Feature. Will be fetched from local storage.                             |
 | **defaultValue** *Object?*|                   Null                              | Default value of the Feature. Will be returned by `FeatureManager` if stored value is `Null` |
 
 ```dart
@@ -127,19 +129,6 @@ enum FeatureType { feature, experiment }
 ```dart
 enum FeatureValueType { text, toggle, doubleNumber, integerNumber, json }
 ```
-
-## Todo
-
-- [ ] Use remote sources.
-  - use abstraction to make it easy for anyone to implement new providers like:
-    - custom api config
-    - firebase remote config
-    - amplitude experiments
-    - etc.
-
-- [ ] Use permanent notification to access dev settings
-
-- [x] Add sync calls of `isEnabled` and `getValue` for `FeatureManager`
 
 ## Contributions
 Feel free to contact me (a.e.getman@gmail.com) or create Merge Requests for this repository :)

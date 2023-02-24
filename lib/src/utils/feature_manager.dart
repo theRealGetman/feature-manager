@@ -45,6 +45,4 @@ class FeatureManager {
         jsonDecode(value) as Map<String, dynamic>;
     return decodedMap;
   }
-
-
 }

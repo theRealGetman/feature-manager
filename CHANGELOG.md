@@ -1,3 +1,7 @@
+## 1.1.1
+
+* Updated Readme
+
 ## 1.1.0
 
 * BREAKING: now you need to provide SharedPreferences instance to create feature manager
