@@ -1,3 +1,7 @@
+## 1.1.2
+
+* Upgraded Dart and Flutter versions
+
 ## 1.1.1
 
 * Updated Readme

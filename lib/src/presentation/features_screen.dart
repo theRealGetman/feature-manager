@@ -44,21 +44,28 @@ class _DeveloperPreferencesWidget extends StatelessWidget {
       body: BlocBuilder<FeaturesCubit, FeaturesState>(
         builder: (BuildContext context, FeaturesState state) {
           if (state is FeaturesSuccess) {
-            return _success(context, state.features);
+            return _Success(state.features);
           } else if (state is FeaturesLoading) {
-            return _loading(context);
+            return const _Loading();
           } else if (state is FeaturesEmpty) {
-            return _empty(context);
+            return const _Empty();
           } else if (state is FeaturesError) {
-            return _error(context);
+            return const _Error();
           }
           return Container();
         },
       ),
     );
   }
+}
 
-  Widget _success(BuildContext context, List<Feature> preferences) {
+class _Success extends StatelessWidget {
+  const _Success(this.preferences);
+
+  final List<Feature> preferences;
+
+  @override
+  Widget build(BuildContext context) {
     return ListView.builder(
       itemBuilder: (BuildContext context, int index) {
         final Feature preference = preferences[index];
@@ -72,14 +79,24 @@ class _DeveloperPreferencesWidget extends StatelessWidget {
       itemCount: preferences.length,
     );
   }
+}
 
-  Widget _loading(BuildContext context) {
+class _Loading extends StatelessWidget {
+  const _Loading();
+
+  @override
+  Widget build(BuildContext context) {
     return Center(
       child: CircularProgressIndicator(),
     );
   }
+}
 
-  Widget _error(BuildContext context) {
+class _Error extends StatelessWidget {
+  const _Error();
+
+  @override
+  Widget build(BuildContext context) {
     return Center(
       child: Text(
         'Error while getting preferences',
@@ -87,8 +104,13 @@ class _DeveloperPreferencesWidget extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _empty(BuildContext context) {
+class _Empty extends StatelessWidget {
+  const _Empty();
+
+  @override
+  Widget build(BuildContext context) {
     return Center(
       child: Text(
         'There are no preferences',
