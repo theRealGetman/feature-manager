@@ -4,23 +4,31 @@ import 'package:feature_manager/src/domain/models/feature.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FeatureManager {
-  FeatureManager._();
+  FeatureManager._(this._sharedPreferences);
 
-  static final FeatureManager _instance = FeatureManager._();
+  static FeatureManager? _instance;
 
-  static FeatureManager get instance => _instance;
+  final SharedPreferences _sharedPreferences;
 
-  late SharedPreferences sharedPreferences;
-
-  /// Initializes the object with the provided [sharedPreferences].
-  /// MUST be called before using the object.
+  /// Retrieves the instance of the FeatureManager class.
   ///
-  /// The [sharedPreferences] parameter is an instance of [SharedPreferences]
-  /// that will be used by the object to store and retrieve data.
+  /// This method checks if the instance has already been created. If not, it initializes it by
+  /// retrieving the shared preferences and creating a new instance of the FeatureManager class.
   ///
-  /// This function does not return anything.
-  void initialize(SharedPreferences sharedPreferences) {
-    this.sharedPreferences = sharedPreferences;
+  /// Returns a `Future` that resolves to the instance of the FeatureManager class.
+  static Future<FeatureManager> getInstance() async {
+    if (_instance == null) {
+      final sharedPreferences = await SharedPreferences.getInstance();
+      _instance = FeatureManager._(sharedPreferences);
+    }
+    return _instance!;
+  }
+
+  /// Disposes the instance of the class.
+  ///
+  /// This function sets the `_instance` variable to `null`, effectively disposing of the instance.
+  static void dispose() {
+    _instance = null;
   }
 
   /// Determines if the given [feature] is enabled.
@@ -38,7 +46,7 @@ class FeatureManager {
   /// - `bool`: `true` if the [feature] is enabled, `false` otherwise.
   bool isEnabled(Feature feature) {
     if (feature.valueType == FeatureValueType.toggle) {
-      return sharedPreferences.getBool(feature.key) ??
+      return _sharedPreferences.getBool(feature.key) ??
           feature.defaultValue as bool? ??
           false;
     } else {
@@ -57,7 +65,7 @@ class FeatureManager {
   /// Returns:
   ///   - The value associated with the [feature] key in the shared preferences, or the default value of the [feature] if no value is found.
   Object? getValue(Feature feature) {
-    return sharedPreferences.get(feature.key) ?? feature.defaultValue;
+    return _sharedPreferences.get(feature.key) ?? feature.defaultValue;
   }
 
   /// Retrieves a string value from the shared preferences based on the provided [feature] key.
@@ -66,7 +74,7 @@ class FeatureManager {
   ///
   /// Returns the string value associated with the [feature] key, or `null` if the key does not exist.
   String? getString(Feature feature) {
-    return sharedPreferences.getString(feature.key);
+    return _sharedPreferences.getString(feature.key);
   }
 
   /// Retrieves an integer value associated with the given [feature] from the shared preferences.
@@ -75,7 +83,7 @@ class FeatureManager {
   ///
   /// Returns the integer value associated with the [feature] key in the shared preferences, or null if the key is not found.
   int? getInt(Feature feature) {
-    return sharedPreferences.getInt(feature.key);
+    return _sharedPreferences.getInt(feature.key);
   }
 
   /// Retrieves a double value associated with the given [feature].
@@ -86,10 +94,15 @@ class FeatureManager {
   /// Returns the double value associated with the given [feature], or null if
   /// no value is found.
   double? getDouble(Feature feature) {
-    return sharedPreferences.getDouble(feature.key);
+    return _sharedPreferences.getDouble(feature.key);
   }
 
   /// Retrieves and decodes a JSON string from the provided Feature object, returning the decoded Map<String, dynamic> or null if the string is empty or null.
+  ///
+  /// The [feature] parameter specifies the feature for which the double value is
+  /// to be retrieved.
+  ///
+  /// Returns the decoded Map<String, dynamic> if the JSON string is not empty or null; otherwise, returns null.
   Map<String, dynamic>? getJson(Feature feature) {
     final value = getString(feature);
     if (value == null || value.isEmpty) {

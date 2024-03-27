@@ -1,3 +1,7 @@
+## 1.3.0
+
+* BREAKING CHANGE: Now you can use `FeatureManager.getInstance()` to get feature manager. Shared preferences initialization is inside now.
+
 ## 1.2.1
 
 * Updated dependencies

@@ -131,4 +131,4 @@ enum FeatureValueType { text, toggle, doubleNumber, integerNumber, json }
 ```
 
 ## Contributions
-Feel free to contact me (a.e.getman@gmail.com) or create Merge Requests for this repository :)
+Feel free to contact me (a.e.getman@gmail.com) or create Pull Requests for this repository :)

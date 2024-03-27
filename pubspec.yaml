@@ -2,7 +2,7 @@
 # Publish: flutter pub publish
 name: feature_manager
 description: Feature manager for developer preferences and experiments
-version: 1.2.1
+version: 1.3.0
 repository: https://github.com/theRealGetman/feature-manager
 issue_tracker: https://github.com/theRealGetman/feature-manager/issues
 
