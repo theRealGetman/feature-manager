@@ -3,12 +3,11 @@ part of 'features_screen.dart';
 class _FeatureItem extends StatefulWidget {
   const _FeatureItem(
     this.item, {
-    Key? key,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   final Feature item;
-  final Function(Object?) onChanged;
+  final void Function(Object?) onChanged;
 
   @override
   _FeatureItemState createState() => _FeatureItemState();
@@ -25,7 +24,7 @@ class _FeatureItemState extends State<_FeatureItem> {
     if (item.valueType == FeatureValueType.toggle) {
       typeSpecificWidget = Switch(
         value: item.value as bool? ?? (item.defaultValue as bool?)!,
-        onChanged: (bool value) {
+        onChanged: (value) {
           _handleOnTap(context);
         },
       );
@@ -39,7 +38,7 @@ class _FeatureItemState extends State<_FeatureItem> {
       typeSpecificWidget = const SizedBox();
     }
 
-    final bool isWithDescription = item.description.isNotEmpty;
+    final isWithDescription = item.description.isNotEmpty;
 
     return ListTile(
       title: Text(
@@ -89,8 +88,7 @@ class _FeatureItemState extends State<_FeatureItem> {
     Widget textField;
     if (item.valueType == FeatureValueType.doubleNumber ||
         item.valueType == FeatureValueType.integerNumber) {
-      textController.text =
-          item.value == null ? '${item.defaultValue}' : '${item.value}';
+      textController.text = item.value == null ? '${item.defaultValue}' : '${item.value}';
 
       textField = TextField(
         keyboardType: item.valueType == FeatureValueType.integerNumber
@@ -100,8 +98,7 @@ class _FeatureItemState extends State<_FeatureItem> {
         maxLines: item.valueType == FeatureValueType.integerNumber ? 1 : null,
       );
     } else {
-      textController.text =
-          item.value as String? ?? (item.defaultValue as String?)!;
+      textController.text = item.value as String? ?? (item.defaultValue as String?)!;
 
       textField = TextField(
         controller: textController,
@@ -109,11 +106,11 @@ class _FeatureItemState extends State<_FeatureItem> {
       );
     }
 
-    final bool isWithDescription = item.description.isNotEmpty;
+    final isWithDescription = item.description.isNotEmpty;
 
     showDialog<void>(
       context: context,
-      builder: (BuildContext context) {
+      builder: (context) {
         return AlertDialog(
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,7 +126,7 @@ class _FeatureItemState extends State<_FeatureItem> {
                           ),
                     ),
                   ],
-                )
+                ),
             ],
           ),
           content: SingleChildScrollView(
@@ -139,13 +136,11 @@ class _FeatureItemState extends State<_FeatureItem> {
             TextButton(
               child: Text(
                 'Save',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.copyWith(color: Colors.green),
+                style:
+                    Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.green),
               ),
               onPressed: () {
-                final String text = textController.text;
+                final text = textController.text;
                 if (item.valueType == FeatureValueType.doubleNumber) {
                   widget.onChanged(
                     text.isEmpty ? 0.0 : double.tryParse(text),
@@ -163,10 +158,7 @@ class _FeatureItemState extends State<_FeatureItem> {
             TextButton(
               child: Text(
                 'Cancel',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.copyWith(color: Colors.red),
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.red),
               ),
               onPressed: () {
                 Navigator.pop(context);

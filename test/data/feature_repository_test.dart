@@ -4,15 +4,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  late FeatureRepository _target;
+  late FeatureRepository target;
   late SharedPreferences sharedPreferences;
-  List<Feature> _preferencesList = [];
+  final preferencesList = <Feature>[];
 
   setUp(() async {
     SharedPreferences.setMockInitialValues(<String, Object>{});
     sharedPreferences = await SharedPreferences.getInstance();
-    _target = FeatureRepository(
-      featuresList: _preferencesList,
+    target = FeatureRepository(
+      featuresList: preferencesList,
       sharedPreferences: sharedPreferences,
     );
   });
@@ -21,7 +21,7 @@ void main() {
     test('when put value for toggle should store in shared preferences',
         () async {
       // given
-      final Feature feature = Feature(
+      const feature = Feature(
         key: 'key',
         title: '',
         type: FeatureType.feature,
@@ -29,17 +29,17 @@ void main() {
       );
 
       // when
-      await _target.putValue(feature, true);
+      await target.putValue(feature, true);
 
       // then
-      final bool? storedValue = sharedPreferences.getBool('key');
+      final storedValue = sharedPreferences.getBool('key');
       expect(storedValue, true);
     });
 
     test('when put value for double should store in shared preferences',
         () async {
       // given
-      final Feature feature = Feature(
+      const feature = Feature(
         key: 'key',
         title: '',
         type: FeatureType.feature,
@@ -47,17 +47,17 @@ void main() {
       );
 
       // when
-      await _target.putValue(feature, 1.1);
+      await target.putValue(feature, 1.1);
 
       // then
-      final double? storedValue = sharedPreferences.getDouble('key');
+      final storedValue = sharedPreferences.getDouble('key');
       expect(storedValue, 1.1);
     });
 
     test('when put value for integer should store in shared preferences',
         () async {
       // given
-      final Feature feature = Feature(
+      const feature = Feature(
         key: 'key',
         title: '',
         type: FeatureType.feature,
@@ -65,17 +65,17 @@ void main() {
       );
 
       // when
-      await _target.putValue(feature, 101);
+      await target.putValue(feature, 101);
 
       // then
-      final int? storedValue = sharedPreferences.getInt('key');
+      final storedValue = sharedPreferences.getInt('key');
       expect(storedValue, 101);
     });
 
     test('when put value for text should store in shared preferences',
         () async {
       // given
-      final Feature feature = Feature(
+      const feature = Feature(
         key: 'key',
         title: '',
         type: FeatureType.feature,
@@ -83,10 +83,10 @@ void main() {
       );
 
       // when
-      await _target.putValue(feature, 'some text');
+      await target.putValue(feature, 'some text');
 
       // then
-      final String? storedValue = sharedPreferences.getString('key');
+      final storedValue = sharedPreferences.getString('key');
       expect(storedValue, 'some text');
     });
   });
@@ -100,39 +100,39 @@ void main() {
         'double_key': 1.1,
         'integer_key': 101,
       });
-      _preferencesList.addAll([
-        Feature(
+      preferencesList.addAll([
+        const Feature(
           key: 'toggle_key',
           title: '',
           type: FeatureType.feature,
           valueType: FeatureValueType.toggle,
         ),
-        Feature(
+        const Feature(
           key: 'text_key',
           title: '',
           type: FeatureType.feature,
           valueType: FeatureValueType.text,
         ),
-        Feature(
+        const Feature(
           key: 'double_key',
           title: '',
           type: FeatureType.feature,
           valueType: FeatureValueType.doubleNumber,
         ),
-        Feature(
+        const Feature(
           key: 'integer_key',
           title: '',
           type: FeatureType.feature,
           valueType: FeatureValueType.integerNumber,
         ),
       ]);
-      _target = FeatureRepository(
-        featuresList: _preferencesList,
+      target = FeatureRepository(
+        featuresList: preferencesList,
         sharedPreferences: sharedPreferences,
       );
 
       // when
-      final List<Feature> features = await _target.getFeatures();
+      final features = await target.getFeatures();
 
       // then
       expect(features[0].value, true);

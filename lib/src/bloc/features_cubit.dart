@@ -1,8 +1,9 @@
 import 'dart:async';
 
+import 'package:feature_manager/src/bloc/cubit.dart';
 import 'package:feature_manager/src/data/feature_repository.dart';
 import 'package:feature_manager/src/domain/models/feature.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/foundation.dart';
 
 part 'features_state.dart';
 
@@ -16,7 +17,7 @@ class FeaturesCubit extends Cubit<FeaturesState> {
     try {
       emit(FeaturesLoading());
 
-      final List<Feature> features = await repository.getFeatures();
+      final features = await repository.getFeatures();
 
       if (features.isNotEmpty) {
         emit(FeaturesSuccess(features));
@@ -26,7 +27,9 @@ class FeaturesCubit extends Cubit<FeaturesState> {
 
       _listenFeatures();
     } catch (e) {
-      print('FeatureManager error >> $e');
+      if (kDebugMode) {
+        print('FeatureManager error >> $e');
+      }
       emit(FeaturesError());
     }
   }
@@ -38,22 +41,26 @@ class FeaturesCubit extends Cubit<FeaturesState> {
     try {
       await repository.putValue(feature, value);
     } catch (e) {
-      print('FeatureManager error >> $e');
+      if (kDebugMode) {
+        print('FeatureManager error >> $e');
+      }
       emit(FeaturesError());
     }
   }
 
   void _listenFeatures() {
     _featuresSubscription ??= repository.getFeaturesStream().distinct().listen(
-      (List<Feature> features) {
+      (features) {
         if (features.isNotEmpty) {
           emit(FeaturesSuccess(features));
         } else {
           emit(FeaturesEmpty());
         }
       },
-      onError: (e) {
-        print('FeatureManager error >> $e');
+      onError: (dynamic e) {
+        if (kDebugMode) {
+          print('FeatureManager error >> $e');
+        }
         emit(FeaturesError());
       },
     );

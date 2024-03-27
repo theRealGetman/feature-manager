@@ -1,3 +1,8 @@
+## 1.2.0
+
+* Removed `bloc` and provider `dependencies`
+* Changed FeatureManager initialization. Now it's required to call `FeatureManager.initialize()` function to provide `sharePreferences` for `FeatureManager`. Otherwise it would crash.
+
 ## 1.1.2
 
 * Upgraded Dart and Flutter versions

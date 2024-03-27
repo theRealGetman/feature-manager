@@ -2,7 +2,7 @@
 # Publish: flutter pub publish
 name: feature_manager
 description: Feature manager for developer preferences and experiments
-version: 1.1.2
+version: 1.2.0
 repository: https://github.com/theRealGetman/feature-manager
 issue_tracker: https://github.com/theRealGetman/feature-manager/issues
 
@@ -14,10 +14,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_bloc: ^8.1.5
-  provider: ^6.1.2
-  bloc_test: ^9.1.7
-  mockito: ^5.4.4
   shared_preferences: ^2.2.2
 
 dev_dependencies:

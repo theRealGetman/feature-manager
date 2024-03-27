@@ -3,37 +3,46 @@ import 'package:feature_manager/src/data/feature_repository.dart';
 import 'package:feature_manager/src/domain/models/feature.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'feature_item.dart';
 
-class DeveloperPreferencesScreen extends StatelessWidget {
+class DeveloperPreferencesScreen extends StatefulWidget {
   const DeveloperPreferencesScreen({
-    Key? key,
     required this.sharedPreferences,
     required this.featuresList,
-  }) : super(key: key);
+    super.key,
+  });
 
   final List<Feature> featuresList;
   final SharedPreferences sharedPreferences;
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider<FeaturesCubit>(
-      create: (BuildContext context) => FeaturesCubit(
-        FeatureRepository(
-          featuresList: featuresList,
-          sharedPreferences: sharedPreferences,
-        ),
-      )..getFeatures(),
-      child: _DeveloperPreferencesWidget(),
-    );
-  }
+  State<DeveloperPreferencesScreen> createState() => _DeveloperPreferencesScreenState();
 }
 
-class _DeveloperPreferencesWidget extends StatelessWidget {
-  const _DeveloperPreferencesWidget({Key? key}) : super(key: key);
+class _DeveloperPreferencesScreenState extends State<DeveloperPreferencesScreen> {
+  late FeaturesCubit cubit;
+
+  @override
+  void initState() {
+    super.initState();
+
+    cubit = FeaturesCubit(
+      FeatureRepository(
+        featuresList: widget.featuresList,
+        sharedPreferences: widget.sharedPreferences,
+      ),
+    );
+
+    cubit.getFeatures();
+  }
+
+  @override
+  void dispose() {
+    cubit.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,15 +50,18 @@ class _DeveloperPreferencesWidget extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Developer Preferences'),
       ),
-      body: BlocBuilder<FeaturesCubit, FeaturesState>(
-        builder: (BuildContext context, FeaturesState state) {
-          if (state is FeaturesSuccess) {
-            return _Success(state.features);
-          } else if (state is FeaturesLoading) {
+      body: StreamBuilder<FeaturesState>(
+        initialData: cubit.state,
+        stream: cubit.stream,
+        builder: (context, state) {
+          final featuresState = state.data ?? cubit.state;
+          if (featuresState is FeaturesSuccess) {
+            return _Success(cubit, featuresState.features);
+          } else if (featuresState is FeaturesLoading) {
             return const _Loading();
-          } else if (state is FeaturesEmpty) {
+          } else if (featuresState is FeaturesEmpty) {
             return const _Empty();
-          } else if (state is FeaturesError) {
+          } else if (featuresState is FeaturesError) {
             return const _Error();
           }
           return Container();
@@ -60,19 +72,20 @@ class _DeveloperPreferencesWidget extends StatelessWidget {
 }
 
 class _Success extends StatelessWidget {
-  const _Success(this.preferences);
+  const _Success(this.cubit, this.preferences);
 
+  final FeaturesCubit cubit;
   final List<Feature> preferences;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemBuilder: (BuildContext context, int index) {
-        final Feature preference = preferences[index];
+      itemBuilder: (context, index) {
+        final preference = preferences[index];
         return _FeatureItem(
           preference,
-          onChanged: (Object? newValue) {
-            context.read<FeaturesCubit>().changeFeature(preference, newValue);
+          onChanged: (newValue) {
+            cubit.changeFeature(preference, newValue);
           },
         );
       },
@@ -86,7 +99,7 @@ class _Loading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: CircularProgressIndicator(),
     );
   }

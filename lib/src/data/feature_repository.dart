@@ -19,10 +19,10 @@ class FeatureRepository {
   Stream<List<Feature>> getFeaturesStream() => _featuresStreamController.stream;
 
   Future<List<Feature>> getFeatures() async {
-    final List<Feature> updatedFeatures = [];
+    final updatedFeatures = <Feature>[];
     await sharedPreferences.reload();
 
-    for (final Feature feature in featuresList) {
+    for (final feature in featuresList) {
       updatedFeatures.add(
         feature.copyWith(
           value: _getValue(sharedPreferences, feature),
@@ -42,20 +42,16 @@ class FeatureRepository {
     switch (feature.valueType) {
       case FeatureValueType.toggle:
         await sharedPreferences.setBool(feature.key, value as bool);
-        break;
       case FeatureValueType.doubleNumber:
         await sharedPreferences.setDouble(feature.key, value as double);
-        break;
       case FeatureValueType.integerNumber:
         await sharedPreferences.setInt(feature.key, value as int);
-        break;
       case FeatureValueType.text:
       case FeatureValueType.json:
         await sharedPreferences.setString(feature.key, value as String);
-        break;
     }
 
-    getFeatures();
+    await getFeatures();
   }
 
   Object? _getValue(SharedPreferences sharedPreferences, Feature feature) =>

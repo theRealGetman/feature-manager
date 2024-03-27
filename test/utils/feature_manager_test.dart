@@ -3,15 +3,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  late FeatureManager _target;
+  late FeatureManager target;
   late SharedPreferences sharedPreferences;
 
   setUp(() async {
     SharedPreferences.setMockInitialValues(<String, Object>{});
     sharedPreferences = await SharedPreferences.getInstance();
-    _target = FeatureManager(
-      sharedPreferences: sharedPreferences,
-    );
+    target = FeatureManager.instance..initialize(sharedPreferences);
   });
 
   group('isEnabled', () {
@@ -21,10 +19,8 @@ void main() {
         'key': true,
       });
       sharedPreferences = await SharedPreferences.getInstance();
-      _target = FeatureManager(
-        sharedPreferences: sharedPreferences,
-      );
-      final Feature feature = Feature(
+      target.initialize(sharedPreferences);
+      const feature = Feature(
         key: 'key',
         title: '',
         type: FeatureType.feature,
@@ -32,16 +28,15 @@ void main() {
       );
 
       // when
-      final bool value = _target.isEnabled(feature);
+      final value = target.isEnabled(feature);
 
       // then
       expect(value, true);
     });
 
-    test('when feature is toggle and value is null should return default value',
-        () {
+    test('when feature is toggle and value is null should return default value', () {
       // given
-      final Feature feature = Feature(
+      const feature = Feature(
         key: 'key',
         title: '',
         type: FeatureType.feature,
@@ -50,7 +45,7 @@ void main() {
       );
 
       // when
-      final bool value = _target.isEnabled(feature);
+      final value = target.isEnabled(feature);
 
       // then
       expect(value, true);
@@ -60,7 +55,7 @@ void main() {
         'when feature is toggle and value is null and default value is null should return false',
         () {
       // given
-      final Feature feature = Feature(
+      const feature = Feature(
         key: 'key',
         title: '',
         type: FeatureType.feature,
@@ -68,7 +63,7 @@ void main() {
       );
 
       // when
-      final bool value = _target.isEnabled(feature);
+      final value = target.isEnabled(feature);
 
       // then
       expect(value, false);
@@ -76,7 +71,7 @@ void main() {
 
     test('when feature is not toggle should return false', () {
       // given
-      final Feature feature = Feature(
+      const feature = Feature(
         key: 'key',
         title: '',
         type: FeatureType.feature,
@@ -84,7 +79,7 @@ void main() {
       );
 
       // when
-      final bool value = _target.isEnabled(feature);
+      final value = target.isEnabled(feature);
 
       // then
       expect(value, false);
@@ -98,10 +93,8 @@ void main() {
         'key': 'some text',
       });
       sharedPreferences = await SharedPreferences.getInstance();
-      _target = FeatureManager(
-        sharedPreferences: sharedPreferences,
-      );
-      final Feature feature = Feature(
+      target.initialize(sharedPreferences);
+      const feature = Feature(
         key: 'key',
         title: '',
         type: FeatureType.feature,
@@ -109,7 +102,7 @@ void main() {
       );
 
       // when
-      final String value = _target.getValue(feature) as String;
+      final value = target.getValue(feature) as String;
 
       // then
       expect(value, 'some text');
@@ -117,7 +110,7 @@ void main() {
 
     test('when stored value is null should return default value', () {
       // given
-      final Feature feature = Feature(
+      const feature = Feature(
         key: 'key',
         title: '',
         type: FeatureType.feature,
@@ -126,7 +119,7 @@ void main() {
       );
 
       // when
-      final String value = _target.getValue(feature) as String;
+      final value = target.getValue(feature) as String;
 
       // then
       expect(value, 'default text');
