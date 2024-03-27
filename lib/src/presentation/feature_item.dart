@@ -117,15 +117,11 @@ class _FeatureItemState extends State<_FeatureItem> {
             children: [
               Text(item.title, style: Theme.of(context).textTheme.bodyLarge),
               if (isWithDescription)
-                Row(
-                  children: <Widget>[
-                    Text(
-                      item.description,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: Colors.grey,
-                          ),
-                    ),
-                  ],
+                Text(
+                  item.description,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Colors.grey,
+                      ),
                 ),
             ],
           ),

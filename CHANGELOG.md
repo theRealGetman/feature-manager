@@ -1,3 +1,7 @@
+## 2.0.0
+
+* Fixed overflow issue and increased version to 2.0.0
+
 ## 1.3.0
 
 * BREAKING CHANGE: Now you can use `FeatureManager.getInstance()` to get feature manager. Shared preferences initialization is inside now.
