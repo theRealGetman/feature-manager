@@ -26,8 +26,7 @@ void main() {
       expect(value, true);
     });
 
-    test('when feature is toggle and value is null should return default value',
-        () async {
+    test('when feature is toggle and value is null should return default value', () async {
       // given
       SharedPreferences.setMockInitialValues(<String, Object>{});
       const feature = Feature(
@@ -46,8 +45,7 @@ void main() {
       expect(value, true);
     });
 
-    test(
-        'when feature is toggle and value is null and default value is null should return false',
+    test('when feature is toggle and value is null and default value is null should return false',
         () async {
       // given
       SharedPreferences.setMockInitialValues(<String, Object>{});

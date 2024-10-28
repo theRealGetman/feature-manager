@@ -15,14 +15,16 @@ dependencies:
     sdk: flutter
 
   feature_manager:
-    path: ../
+    path: ../feature_manager
 
   provider: ^6.1.2
-  shared_preferences: ^2.2.2
+  shared_preferences: ^2.3.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  feature_manager_generator:
+    path: ../generator
 
 # The following section is specific to Flutter.
 flutter:
