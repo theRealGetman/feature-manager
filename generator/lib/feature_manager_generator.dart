@@ -1,8 +1,6 @@
-/// Support for doing something awesome.
-///
-/// More dartdocs go here.
 library;
 
-export 'src/feature_manager_generator_base.dart';
+import 'package:build/build.dart';
+import 'package:feature_manager_generator/generator/factory.dart';
 
-// TODO: Export any libraries intended for clients of this package.
+Builder featureManagerBuilder(BuilderOptions options) => generatorFactoryBuilder(options);

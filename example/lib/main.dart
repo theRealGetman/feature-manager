@@ -1,4 +1,4 @@
-import 'package:example/features.dart';
+import 'package:example/app_features.dart';
 import 'package:feature_manager/feature_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +49,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    final isEnabled = context.read<FeatureManager>().isEnabled(Features.booleanFeature);
+    final isEnabled = context.read<FeatureManager>().isEnabled(AppFeatures.booleanFeature);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Feature Manager Demo Application'),
@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     .push(
                   MaterialPageRoute<void>(
                     builder: (context) => DeveloperPreferencesScreen(
-                      featuresList: Features.values,
+                      featuresList: AppFeatures.values,
                       sharedPreferences: context.read(),
                     ),
                   ),

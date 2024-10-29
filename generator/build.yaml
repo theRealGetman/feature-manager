@@ -1,0 +1,8 @@
+builders:
+  feature_manager_generator:
+    import: "package:feature_manager_generator/feature_manager_generator.dart"
+    builder_factories: ["featureManagerBuilder"]
+    build_extensions: { ".dart": [".g.dart"] }
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]
