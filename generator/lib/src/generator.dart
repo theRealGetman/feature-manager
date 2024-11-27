@@ -64,9 +64,7 @@ class FeatureGenerator extends GeneratorForAnnotation<FeatureManagerInit> {
     }
 
     // Add field declarations
-    for (final fieldDecl in fieldDeclarations) {
-      buffer.writeln(fieldDecl);
-    }
+    fieldDeclarations.forEach(buffer.writeln);
 
     buffer.writeln('}');
 
@@ -132,24 +130,13 @@ class FeatureGenerator extends GeneratorForAnnotation<FeatureManagerInit> {
   }
 
   String _generateFeatureInitializer(String fieldName, String featureType, FeatureOptions options) {
-    return '''$fieldName = $featureType(
+    return '''
+        $fieldName = $featureType(
           key: '${options.key}',
           title: '${options.title}',
           description: '${options.description}',
           defaultValue: ${_formatDefaultValue(options.defaultValue)},
         )''';
-  }
-
-  String _generateFeatureCode(String fieldName, FeatureOptions options) {
-    return '''
-  final Feature $fieldName = Feature(
-    key: '${options.key}',
-    title: '${options.title}',
-    description: '${options.description}',
-    defaultValue: ${_formatDefaultValue(options.defaultValue)},
-    valueType: ${options.valueType},
-  );
-''';
   }
 
   String _formatDefaultValue(dynamic value) {
