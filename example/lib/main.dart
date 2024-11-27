@@ -1,8 +1,9 @@
-import 'package:example/app_features.dart';
+import 'package:example/features.dart';
 import 'package:feature_manager/feature_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:feature_manager/src/utils/extensions.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,7 +50,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    final isEnabled = context.read<FeatureManager>().isEnabled(AppFeatures.booleanFeature);
+    final isEnabled = context.read<FeatureManager>().booleanFeature.isEnabled;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Feature Manager Demo Application'),
@@ -79,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     .push(
                   MaterialPageRoute<void>(
                     builder: (context) => DeveloperPreferencesScreen(
-                      featuresList: AppFeatures.values,
+                      featuresList: AppFeatures.instance().values,
                       sharedPreferences: context.read(),
                     ),
                   ),

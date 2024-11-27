@@ -1,7 +1,8 @@
 name: feature_manager_generator
 description: Feature manager generator for developer preferences and experiments
-repository: https://github.com/theRealGetman/feature-manager
-issue_tracker: https://github.com/theRealGetman/feature-manager/issues
+publish_to: none
+# repository: https://github.com/theRealGetman/feature-manager/tree/master/feature_manager_generator
+# issue_tracker: https://github.com/theRealGetman/feature-manager/issues
 version: 1.0.0
 
 environment:
@@ -14,6 +15,10 @@ dependencies:
   source_gen: ^1.5.0
   feature_manager:
     path: ../feature_manager # TODO(hrubalski): replace it with just a version
+    # git:
+    #   url: git@github.com:hrubalski/feature-manager.git
+    #   ref: feat-feature-manager-generator
+    #   path: feature_manager
 
 dev_dependencies:
   lints: ^5.0.0

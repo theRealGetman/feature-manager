@@ -1,17 +1,9 @@
-import 'package:feature_manager/feature_manager.dart';
-import 'package:flutter/foundation.dart';
+import 'package:feature_manager/src/models/feature.dart';
 
-@immutable
 class FeatureManagerInit {
   const FeatureManagerInit();
 }
 
-@immutable
-class FeatureManagerBuilder {
-  const FeatureManagerBuilder();
-}
-
-@immutable
 class FeatureOptions {
   const FeatureOptions({
     required this.key,

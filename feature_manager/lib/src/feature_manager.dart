@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:feature_manager/src/domain/models/feature.dart';
+import 'package:feature_manager/src/models/feature.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FeatureManager {
@@ -20,6 +20,17 @@ class FeatureManager {
     if (_instance == null) {
       final sharedPreferences = await SharedPreferences.getInstance();
       _instance = FeatureManager._(sharedPreferences);
+    }
+    return _instance!;
+  }
+
+  /// Returns the singleton instance of [FeatureManager].
+  /// 
+  /// Throws an [Exception] if the instance is not initialized.
+  /// Ensure to call `getInstance()` before accessing this property.
+  static FeatureManager get instance {
+    if (_instance == null) {
+      throw Exception('FeatureManager instance is not initialized. Call getInstance() first.');
     }
     return _instance!;
   }
@@ -46,9 +57,7 @@ class FeatureManager {
   /// - `bool`: `true` if the [feature] is enabled, `false` otherwise.
   bool isEnabled(Feature feature) {
     if (feature.valueType == FeatureValueType.toggle) {
-      return _sharedPreferences.getBool(feature.key) ??
-          feature.defaultValue as bool? ??
-          false;
+      return _sharedPreferences.getBool(feature.key) ?? feature.defaultValue as bool? ?? false;
     } else {
       return false;
     }

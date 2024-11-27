@@ -1,8 +1,15 @@
+targets:
+  $default:
+    builders:
+      feature_manager_generator|annotations:
+        enabled: true
+
 builders:
   feature_manager_generator:
+    target: ":featureManagerGenerator"
     import: "package:feature_manager_generator/feature_manager_generator.dart"
-    builder_factories: ["featureManagerBuilder"]
-    build_extensions: { ".dart": [".g.dart"] }
+    builder_factories: ["featureManagerGenerator"]
+    build_extensions: { ".dart": [".fm.dart"] }
     auto_apply: dependents
-    build_to: cache
+    build_to: source
     applies_builders: ["source_gen|combining_builder"]

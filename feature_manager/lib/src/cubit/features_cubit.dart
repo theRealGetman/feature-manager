@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:feature_manager/src/bloc/cubit.dart';
+import 'package:feature_manager/feature.dart';
+import 'package:feature_manager/src/cubit/cubit.dart';
 import 'package:feature_manager/src/data/feature_repository.dart';
-import 'package:feature_manager/src/domain/models/feature.dart';
 import 'package:flutter/foundation.dart';
 
 part 'features_state.dart';

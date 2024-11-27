@@ -1,6 +1,4 @@
-library feature_manager;
+library;
 
-export 'src/annotations/annotations.dart';
-export 'src/domain/models/feature.dart';
+export 'src/feature_manager.dart';
 export 'src/presentation/features_screen.dart';
-export 'src/utils/feature_manager.dart';

@@ -1,6 +1,70 @@
-import 'package:flutter/foundation.dart';
+// ignore_for_file: avoid_equals_and_hash_code_on_mutable_classes
 
-@immutable
+class BooleanFeature extends Feature {
+  BooleanFeature({
+    required super.key,
+    required super.title,
+    super.description,
+    super.remoteSourceKey,
+    bool? super.value,
+    bool? super.defaultValue,
+  }) : super(
+          valueType: FeatureValueType.toggle,
+        );
+}
+
+class TextFeature extends Feature {
+  TextFeature({
+    required super.key,
+    required super.title,
+    super.description,
+    super.remoteSourceKey,
+    String? super.value,
+    String? super.defaultValue,
+  }) : super(
+          valueType: FeatureValueType.text,
+        );
+}
+
+class DoubleFeature extends Feature {
+  DoubleFeature({
+    required super.key,
+    required super.title,
+    super.description,
+    super.remoteSourceKey,
+    double? super.value,
+    double? super.defaultValue,
+  }) : super(
+          valueType: FeatureValueType.doubleNumber,
+        );
+}
+
+class IntegerFeature extends Feature {
+  IntegerFeature({
+    required super.key,
+    required super.title,
+    super.description,
+    super.remoteSourceKey,
+    int? super.value,
+    int? super.defaultValue,
+  }) : super(
+          valueType: FeatureValueType.integerNumber,
+        );
+}
+
+class JsonFeature extends Feature {
+  JsonFeature({
+    required super.key,
+    required super.title,
+    super.description,
+    super.remoteSourceKey,
+    super.value,
+    super.defaultValue,
+  }) : super(
+          valueType: FeatureValueType.json,
+        );
+}
+
 class Feature {
   const Feature({
     required this.key,

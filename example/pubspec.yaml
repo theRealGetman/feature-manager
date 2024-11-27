@@ -7,25 +7,32 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.2.4 <4.0.0"
-  flutter: ">=3.16.0"
+  sdk: ^3.5.3
 
 dependencies:
   flutter:
     sdk: flutter
 
   feature_manager:
+    # git:
+    #   url: git@github.com:hrubalski/feature-manager.git
+    #   ref: feat-feature-manager-generator
+    #   path: feature_manager
     path: ../feature_manager
 
   provider: ^6.1.2
   shared_preferences: ^2.3.2
 
 dev_dependencies:
-  build_runner: ^2.4.8
+  build_runner:
   flutter_test:
     sdk: flutter
   feature_manager_generator:
-    path: ../generator
+    # git:
+    #   url: git@github.com:hrubalski/feature-manager.git
+    #   ref: feat-feature-manager-generator
+    #   path: generator
+    path: ../generator/
 
 # The following section is specific to Flutter.
 flutter:

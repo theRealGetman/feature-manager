@@ -1,3 +1,4 @@
+import 'package:feature_manager/feature.dart';
 import 'package:feature_manager/feature_manager.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

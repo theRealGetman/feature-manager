@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:feature_manager/src/domain/models/feature.dart';
+import 'package:feature_manager/feature.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FeatureRepository {

@@ -35,7 +35,7 @@ class _FeatureItemState extends State<_FeatureItem> {
         style: Theme.of(context).textTheme.bodyLarge,
       );
     } else {
-      typeSpecificWidget = const SizedBox();
+      typeSpecificWidget = const SizedBox.shrink();
     }
 
     final isWithDescription = item.description.isNotEmpty;
@@ -132,8 +132,7 @@ class _FeatureItemState extends State<_FeatureItem> {
             TextButton(
               child: Text(
                 'Save',
-                style:
-                    Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.green),
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.green),
               ),
               onPressed: () {
                 final text = textController.text;
