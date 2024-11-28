@@ -14,10 +14,6 @@ dependencies:
     sdk: flutter
 
   feature_manager:
-    # git:
-    #   url: git@github.com:hrubalski/feature-manager.git
-    #   ref: feat-feature-manager-generator
-    #   path: feature_manager
     path: ../feature_manager
 
   provider: ^6.1.2
@@ -28,10 +24,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   feature_manager_generator:
-    # git:
-    #   url: git@github.com:hrubalski/feature-manager.git
-    #   ref: feat-feature-manager-generator
-    #   path: generator
     path: ../generator/
 
 # The following section is specific to Flutter.

@@ -1,6 +1,6 @@
 # Feature Manager for Flutter
 
-[![License: MIT](https://img.shields.io/badge/Licence-MIT-success.svg)]
+![License: MIT](https://img.shields.io/badge/Licence-MIT-success.svg)
 
 Feature manager allows you to hide some unfinished/secret feature from your users, or experiments, that can be managed
 from remote data source or local settings.

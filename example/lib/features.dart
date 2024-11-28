@@ -23,7 +23,7 @@ class AppFeatures {
     defaultValue: '',
     valueType: FeatureValueType.text,
   )
-  final TextFeature textFeature;
+  final Feature textFeature;
 
   @FeatureOptions(
     key: 'dev-prefs-bool-pref',
@@ -32,7 +32,7 @@ class AppFeatures {
     defaultValue: false,
     valueType: FeatureValueType.toggle,
   )
-  final BooleanFeature booleanFeature;
+  final Feature booleanFeature;
 
   @FeatureOptions(
     key: 'dev-prefs-double-pref',
@@ -41,7 +41,7 @@ class AppFeatures {
     defaultValue: null,
     valueType: FeatureValueType.doubleNumber,
   )
-  final DoubleFeature doubleFeature;
+  final Feature doubleFeature;
 
   @FeatureOptions(
     key: 'dev-prefs-integer-pref',
@@ -50,7 +50,7 @@ class AppFeatures {
     defaultValue: null,
     valueType: FeatureValueType.integerNumber,
   )
-  final IntegerFeature integerFeature;
+  final Feature integerFeature;
 
   @FeatureOptions(
     key: 'dev-prefs-json-pref',
