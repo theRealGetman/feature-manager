@@ -4,5 +4,5 @@ import 'package:source_gen/source_gen.dart';
 
 Builder generatorFactoryBuilder(BuilderOptions options) => PartBuilder(
       [FeatureGenerator()],
-      '.fm.dart',
+      '.fm.g.dart',
     );
