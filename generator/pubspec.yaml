@@ -3,7 +3,7 @@ description: Feature manager generator for developer preferences and experiments
 repository: https://github.com/theRealGetman/feature-manager/tree/master/generator
 issue_tracker: https://github.com/theRealGetman/feature-manager/issues
 
-version: 2.0.0
+version: 3.0.0
 
 environment:
   sdk: ">=3.2.4 <4.0.0"
