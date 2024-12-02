@@ -1,3 +1,7 @@
+## 3.0.1
+
+- Export for `src/utils/extensions.dart `to make extensions publicly accessible.
+
 ## 3.0.0
 
 - Added a new wrapper for typed features. Instead of creating a generic Feature class, you can now use specific types: `BooleanFeature`, `TextFeature`, `IntegerFeature`, `DoubleFeature`, and `JsonFeature`.

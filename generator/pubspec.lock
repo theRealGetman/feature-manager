@@ -105,9 +105,10 @@ packages:
   feature_manager:
     dependency: "direct main"
     description:
-      path: "../feature_manager"
-      relative: true
-    source: path
+      name: feature_manager
+      sha256: "078a65bdfd0ca03d86215f03370ad0ed0f1bdc5fe2091e7bfe66f297e1613238"
+      url: "https://pub.dev"
+    source: hosted
     version: "3.0.0"
   ffi:
     dependency: transitive
