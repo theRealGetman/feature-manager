@@ -19,6 +19,7 @@ class AppFeatures {
 
   @FeatureOptions(
     key: 'dev-prefs-text-pref',
+    remoteSourceKey: 'REMOTE-KEY-dev-prefs-text-pref',
     title: 'Text pref',
     description: 'This is text preference',
     defaultValue: 'Some default text',

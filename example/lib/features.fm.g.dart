@@ -14,39 +14,51 @@ class _$AppFeatures implements AppFeatures {
   _$AppFeatures._internal()
       : textFeature = TextFeature(
           key: 'dev-prefs-text-pref',
+          remoteSourceKey: 'REMOTE-KEY-dev-prefs-text-pref',
           title: 'Text pref',
           description: 'This is text preference',
           defaultValue: 'Some default text',
+          type: FeatureType.experiment,
         ),
         booleanFeature = BooleanFeature(
           key: 'dev-prefs-bool-pref',
+          remoteSourceKey: '',
           title: 'Toggle pref',
           description: 'This is toggle preference',
           defaultValue: false,
+          type: FeatureType.feature,
         ),
         doubleFeature = DoubleFeature(
           key: 'dev-prefs-double-pref',
+          remoteSourceKey: '',
           title: 'Number double pref',
           description: 'This is number double preference',
           defaultValue: 2.2,
+          type: FeatureType.feature,
         ),
         integerFeature = IntegerFeature(
           key: 'dev-prefs-integer-pref',
+          remoteSourceKey: '',
           title: 'Number integer pref',
           description: 'This is number integer preference',
           defaultValue: 1,
+          type: FeatureType.feature,
         ),
         jsonFeature = JsonFeature(
           key: 'dev-prefs-json-pref',
+          remoteSourceKey: '',
           title: 'Json pref',
           description: 'This is json preference',
           defaultValue: '{value: \'Json default value\'}',
+          type: FeatureType.feature,
         ),
         nullableTextFeature = TextFeature(
           key: 'dev-prefs-text-pref',
+          remoteSourceKey: '',
           title: 'Text pref',
           description: 'This is text preference',
           defaultValue: null,
+          type: FeatureType.feature,
         );
   @override
   final TextFeature textFeature;

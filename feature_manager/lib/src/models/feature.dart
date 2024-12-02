@@ -8,6 +8,7 @@ class BooleanFeature extends Feature {
     super.remoteSourceKey,
     bool? super.value,
     bool? super.defaultValue,
+    super.type,
   }) : super(
           valueType: FeatureValueType.toggle,
         );
@@ -21,6 +22,7 @@ class TextFeature extends Feature {
     super.remoteSourceKey,
     String? super.value,
     String? super.defaultValue,
+    super.type,
   }) : super(
           valueType: FeatureValueType.text,
         );
@@ -34,6 +36,7 @@ class DoubleFeature extends Feature {
     super.remoteSourceKey,
     double? super.value,
     double? super.defaultValue,
+    super.type,
   }) : super(
           valueType: FeatureValueType.doubleNumber,
         );
@@ -47,6 +50,7 @@ class IntegerFeature extends Feature {
     super.remoteSourceKey,
     int? super.value,
     int? super.defaultValue,
+    super.type,
   }) : super(
           valueType: FeatureValueType.integerNumber,
         );
@@ -60,6 +64,7 @@ class JsonFeature extends Feature {
     super.remoteSourceKey,
     super.value,
     super.defaultValue,
+    super.type,
   }) : super(
           valueType: FeatureValueType.json,
         );

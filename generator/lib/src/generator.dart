@@ -124,9 +124,12 @@ class FeatureGenerator extends GeneratorForAnnotation<FeatureManagerInit> {
 
       return FeatureOptions(
         key: elementValue.getField('key')?.toStringValue() ?? '',
+        remoteSourceKey: elementValue.getField('remoteSourceKey')?.toStringValue() ?? '',
         title: elementValue.getField('title')?.toStringValue() ?? '',
         description: elementValue.getField('description')?.toStringValue() ?? '',
         defaultValue: defaultValue,
+        type:
+            FeatureType.values[elementValue.getField('type')?.getField('index')?.toIntValue() ?? 0],
         valueType: FeatureValueType
             .values[elementValue.getField('valueType')?.getField('index')?.toIntValue() ?? 0],
       );
@@ -153,7 +156,6 @@ class FeatureGenerator extends GeneratorForAnnotation<FeatureManagerInit> {
     } else if (type.isDartCoreBool) {
       return object.toBoolValue();
     }
-    // Handle other types if necessary
     return null;
   }
 
@@ -161,9 +163,11 @@ class FeatureGenerator extends GeneratorForAnnotation<FeatureManagerInit> {
     return '''
         $fieldName = $featureType(
           key: '${options.key}',
+          remoteSourceKey: '${options.remoteSourceKey}',
           title: '${options.title}',
           description: '${options.description}',
           defaultValue: ${_formatDefaultValue(options.defaultValue)},
+          type: ${options.type},
         )''';
   }
 
