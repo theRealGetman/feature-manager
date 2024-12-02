@@ -16,31 +16,37 @@ class _$AppFeatures implements AppFeatures {
           key: 'dev-prefs-text-pref',
           title: 'Text pref',
           description: 'This is text preference',
-          defaultValue: '',
+          defaultValue: 'Some default text',
         ),
         booleanFeature = BooleanFeature(
           key: 'dev-prefs-bool-pref',
           title: 'Toggle pref',
           description: 'This is toggle preference',
-          defaultValue: null,
+          defaultValue: false,
         ),
         doubleFeature = DoubleFeature(
           key: 'dev-prefs-double-pref',
           title: 'Number double pref',
           description: 'This is number double preference',
-          defaultValue: null,
+          defaultValue: 2.2,
         ),
         integerFeature = IntegerFeature(
           key: 'dev-prefs-integer-pref',
           title: 'Number integer pref',
           description: 'This is number integer preference',
-          defaultValue: null,
+          defaultValue: 1,
         ),
         jsonFeature = JsonFeature(
           key: 'dev-prefs-json-pref',
           title: 'Json pref',
           description: 'This is json preference',
           defaultValue: '{value: \'Json default value\'}',
+        ),
+        nullableTextFeature = TextFeature(
+          key: 'dev-prefs-text-pref',
+          title: 'Text pref',
+          description: 'This is text preference',
+          defaultValue: null,
         );
   @override
   final TextFeature textFeature;
@@ -52,6 +58,8 @@ class _$AppFeatures implements AppFeatures {
   final IntegerFeature integerFeature;
   @override
   final JsonFeature jsonFeature;
+  @override
+  final TextFeature nullableTextFeature;
 }
 
 extension AppFeaturesExt on AppFeatures {
@@ -61,6 +69,7 @@ extension AppFeaturesExt on AppFeatures {
         doubleFeature,
         integerFeature,
         jsonFeature,
+        nullableTextFeature,
       ];
 }
 
@@ -70,4 +79,5 @@ extension FeatureManagerExt on FeatureManager {
   DoubleFeature get doubleFeature => _$AppFeatures().doubleFeature;
   IntegerFeature get integerFeature => _$AppFeatures().integerFeature;
   JsonFeature get jsonFeature => _$AppFeatures().jsonFeature;
+  TextFeature get nullableTextFeature => _$AppFeatures().nullableTextFeature;
 }

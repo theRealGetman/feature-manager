@@ -1,3 +1,4 @@
+import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:feature_manager/annotations.dart';
@@ -117,15 +118,42 @@ class FeatureGenerator extends GeneratorForAnnotation<FeatureManagerInit> {
       if (elementValue == null || !typeChecker.isExactlyType(elementValue.type!)) {
         continue;
       }
+
+      final defaultValueField = elementValue.getField('defaultValue');
+      final defaultValue = _getLiteralValue(defaultValueField);
+
       return FeatureOptions(
         key: elementValue.getField('key')?.toStringValue() ?? '',
         title: elementValue.getField('title')?.toStringValue() ?? '',
         description: elementValue.getField('description')?.toStringValue() ?? '',
-        defaultValue: elementValue.getField('defaultValue')?.toStringValue(),
+        defaultValue: defaultValue,
         valueType: FeatureValueType
             .values[elementValue.getField('valueType')?.getField('index')?.toIntValue() ?? 0],
       );
     }
+    return null;
+  }
+
+  dynamic _getLiteralValue(DartObject? object) {
+    if (object == null || object.isNull) {
+      return null;
+    }
+
+    final type = object.type;
+    if (type == null) {
+      return null;
+    }
+
+    if (type.isDartCoreString) {
+      return object.toStringValue();
+    } else if (type.isDartCoreInt) {
+      return object.toIntValue();
+    } else if (type.isDartCoreDouble) {
+      return object.toDoubleValue();
+    } else if (type.isDartCoreBool) {
+      return object.toBoolValue();
+    }
+    // Handle other types if necessary
     return null;
   }
 
