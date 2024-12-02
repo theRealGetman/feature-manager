@@ -12,7 +12,6 @@ class FeatureOptions {
     this.type = FeatureType.feature,
     this.description = '',
     this.remoteSourceKey = '',
-    this.value,
     this.defaultValue,
   });
 
@@ -22,6 +21,5 @@ class FeatureOptions {
   final String title;
   final String description;
   final String remoteSourceKey;
-  final Object? value;
   final Object? defaultValue;
 }

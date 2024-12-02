@@ -6,7 +6,9 @@ Feature Manager allows you to hide unfinished or secret features from your users
 
 If you want to use A/B testing or feature toggling with Firebase Remote Config, use [Remote Config Feature Manager](https://pub.dev/packages/remote_config_feature_manager)
 
-![Example 01](doc/feature-manager-1.png) ![Example 02](doc/feature-manager-2.png)
+| Example                                   | Developer Preferences                     |
+| ----------------------------------------- | ----------------------------------------- |
+| ![Example 01](/doc/feature-manager-1.png) | ![Example 02](/doc/feature-manager-2.png) |
 
 ## Getting Started
 
@@ -185,6 +187,7 @@ Navigator.of(context).push(
     ),
 );
 ```
+
 **Note**: Hide this screen or navigation option in production builds to prevent users from accessing development features.
 
 ### Feature parameters

@@ -1,3 +1,8 @@
+## 3.0.2
+
+- Removed unused `value` Parameter from `FeatureOptions`:
+- Added `FeatureType` Parameter to Typed Feature Classes
+
 ## 3.0.1
 
 - Export for `src/utils/extensions.dart `to make extensions publicly accessible.
