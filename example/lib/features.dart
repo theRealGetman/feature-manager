@@ -12,6 +12,7 @@ class AppFeatures {
     required this.doubleFeature,
     required this.integerFeature,
     required this.jsonFeature,
+    required this.nullableTextFeature,
   });
 
   factory AppFeatures.instance() => _$AppFeatures();
@@ -20,7 +21,7 @@ class AppFeatures {
     key: 'dev-prefs-text-pref',
     title: 'Text pref',
     description: 'This is text preference',
-    defaultValue: '',
+    defaultValue: 'Some default text',
     valueType: FeatureValueType.text,
   )
   final Feature textFeature;
@@ -38,7 +39,7 @@ class AppFeatures {
     key: 'dev-prefs-double-pref',
     title: 'Number double pref',
     description: 'This is number double preference',
-    defaultValue: null,
+    defaultValue: 2.2,
     valueType: FeatureValueType.doubleNumber,
   )
   final Feature doubleFeature;
@@ -47,7 +48,7 @@ class AppFeatures {
     key: 'dev-prefs-integer-pref',
     title: 'Number integer pref',
     description: 'This is number integer preference',
-    defaultValue: null,
+    defaultValue: 1,
     valueType: FeatureValueType.integerNumber,
   )
   final Feature integerFeature;
@@ -60,4 +61,13 @@ class AppFeatures {
     valueType: FeatureValueType.json,
   )
   final Feature jsonFeature;
+
+  @FeatureOptions(
+    key: 'dev-prefs-text-pref',
+    title: 'Text pref',
+    description: 'This is text preference',
+    defaultValue: null,
+    valueType: FeatureValueType.text,
+  )
+  final Feature nullableTextFeature;
 }
