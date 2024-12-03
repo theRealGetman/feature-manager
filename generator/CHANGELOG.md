@@ -1,3 +1,7 @@
+## 3.0.3
+
+- Replaced `PartBuilder` with `SharedPartBuilder` to ensure that generated code is correctly integrated into source files using part directives. This change fixes issues where generated files were not being created or included properly, enhancing compatibility and reliability in code generation workflows.
+
 ## 3.0.2
 
 - Fixed an issue where the `remoteSourceKey` parameter specified in FeatureOptions was not included in the generated code.

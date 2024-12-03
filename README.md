@@ -52,7 +52,7 @@ import 'package:feature_manager/annotations.dart';
 import 'package:feature_manager/feature.dart';
 import 'package:feature_manager/feature_manager.dart';
 
-part 'features.fm.g.dart';
+part 'features.g.dart';
 
 @FeatureManagerInit()
 class AppFeatures {
@@ -116,7 +116,7 @@ class AppFeatures {
 - **Annotations**: Use the `@FeatureManagerInit()` annotation on the AppFeatures class to indicate that code should be generated.
 - **Feature Fields**: Annotate each feature field with `@FeatureOptions()` and provide the necessary parameters.
 - **Factory Constructor**: The factory AppFeatures.instance() returns an instance of the generated class \_$AppFeatures().
-- **Part Directive**: The part `'features.fm.g.dart'`; directive tells Dart where to find the generated code.
+- **Part Directive**: The part `'features.g.dart'`; directive tells Dart where to find the generated code.
 
 2. Run the Code Generator
 

@@ -24,14 +24,18 @@ class FeatureGenerator extends GeneratorForAnnotation<FeatureManagerInit> {
     final featureFieldNames = <String>[];
 
     buffer.writeln('class _\$${classElement.name} implements ${classElement.name} {');
+    buffer.writeln();
+
     buffer.writeln('''
     factory  _\$${classElement.name}() {
       return _instance;
     }''');
+    buffer.writeln();
 
     buffer.writeln(
       ' static final _\$${classElement.name} _instance = _\$${classElement.name}._internal();',
     );
+    buffer.writeln();
 
     // Start the constructor with initializer list
     buffer.writeln('  _\$${classElement.name}._internal()');
@@ -92,7 +96,6 @@ class FeatureGenerator extends GeneratorForAnnotation<FeatureManagerInit> {
     buffer.writeln('}');
 
     final generatedCode = buffer.toString();
-    log.info('Generated code:\n$generatedCode');
     return generatedCode;
   }
 
