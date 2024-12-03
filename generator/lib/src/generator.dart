@@ -96,7 +96,6 @@ class FeatureGenerator extends GeneratorForAnnotation<FeatureManagerInit> {
     buffer.writeln('}');
 
     final generatedCode = buffer.toString();
-    log.info('Generated code:\n$generatedCode');
     return generatedCode;
   }
 
