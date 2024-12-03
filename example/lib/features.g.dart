@@ -10,7 +10,9 @@ class _$AppFeatures implements AppFeatures {
   factory _$AppFeatures() {
     return _instance;
   }
+
   static final _$AppFeatures _instance = _$AppFeatures._internal();
+
   _$AppFeatures._internal()
       : textFeature = TextFeature(
           key: 'dev-prefs-text-pref',
@@ -18,7 +20,7 @@ class _$AppFeatures implements AppFeatures {
           title: 'Text pref',
           description: 'This is text preference',
           defaultValue: 'Some default text',
-          type: FeatureType.experiment,
+          type: FeatureType.feature,
         ),
         booleanFeature = BooleanFeature(
           key: 'dev-prefs-bool-pref',

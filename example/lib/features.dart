@@ -2,7 +2,7 @@ import 'package:feature_manager/annotations.dart';
 import 'package:feature_manager/feature.dart';
 import 'package:feature_manager/feature_manager.dart';
 
-part 'features.fm.g.dart';
+part 'features.g.dart';
 
 @FeatureManagerInit()
 class AppFeatures {

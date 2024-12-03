@@ -3,7 +3,6 @@ import 'package:feature_manager/feature_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:feature_manager/src/utils/extensions.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
