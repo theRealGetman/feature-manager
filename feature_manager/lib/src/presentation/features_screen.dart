@@ -1,4 +1,5 @@
 import 'package:feature_manager/feature.dart';
+import 'package:feature_manager/feature_manager.dart';
 import 'package:feature_manager/src/cubit/features_cubit.dart';
 import 'package:feature_manager/src/data/feature_repository.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class DeveloperPreferencesScreen extends StatefulWidget {
     super.key,
   });
 
-  final List<Feature> featuresList;
+  final List<Feature<dynamic>> featuresList;
   final SharedPreferences sharedPreferences;
 
   @override
@@ -75,7 +76,7 @@ class _Success extends StatelessWidget {
   const _Success(this.cubit, this.preferences);
 
   final FeaturesCubit cubit;
-  final List<Feature> preferences;
+  final List<Feature<dynamic>> preferences;
 
   @override
   Widget build(BuildContext context) {

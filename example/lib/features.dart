@@ -23,52 +23,46 @@ class AppFeatures {
     title: 'Text pref',
     description: 'This is text preference',
     defaultValue: 'Some default text',
-    valueType: FeatureValueType.text,
   )
-  final Feature textFeature;
+  final Feature<String> textFeature;
 
   @FeatureOptions(
     key: 'dev-prefs-bool-pref',
     title: 'Toggle pref',
     description: 'This is toggle preference',
     defaultValue: false,
-    valueType: FeatureValueType.toggle,
   )
-  final Feature booleanFeature;
+  final Feature<bool> booleanFeature;
 
   @FeatureOptions(
     key: 'dev-prefs-double-pref',
     title: 'Number double pref',
     description: 'This is number double preference',
     defaultValue: 2.2,
-    valueType: FeatureValueType.doubleNumber,
   )
-  final Feature doubleFeature;
+  final Feature<double> doubleFeature;
 
   @FeatureOptions(
     key: 'dev-prefs-integer-pref',
     title: 'Number integer pref',
     description: 'This is number integer preference',
     defaultValue: 1,
-    valueType: FeatureValueType.integerNumber,
   )
-  final Feature integerFeature;
+  final Feature<int> integerFeature;
 
   @FeatureOptions(
     key: 'dev-prefs-json-pref',
     title: 'Json pref',
     description: 'This is json preference',
     defaultValue: "{value: 'Json default value'}",
-    valueType: FeatureValueType.json,
   )
-  final Feature jsonFeature;
+  final Feature<Object> jsonFeature;
 
   @FeatureOptions(
-    key: 'dev-prefs-text-pref',
+    key: 'dev-prefs-text-pref-nullable',
     title: 'Text pref',
     description: 'This is text preference',
     defaultValue: null,
-    valueType: FeatureValueType.text,
   )
-  final Feature nullableTextFeature;
+  final Feature<String> nullableTextFeature;
 }

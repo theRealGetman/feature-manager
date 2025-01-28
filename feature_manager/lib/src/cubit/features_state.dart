@@ -7,7 +7,7 @@ class FeaturesInitial extends FeaturesState {}
 class FeaturesSuccess extends FeaturesState {
   FeaturesSuccess(this.features);
 
-  final List<Feature> features;
+  final List<Feature<dynamic>> features;
 }
 
 class FeaturesLoading extends FeaturesState {}

@@ -4,10 +4,9 @@ class FeatureManagerInit {
   const FeatureManagerInit();
 }
 
-class FeatureOptions {
+class FeatureOptions<T> {
   const FeatureOptions({
     required this.key,
-    required this.valueType,
     required this.title,
     this.type = FeatureType.feature,
     this.description = '',
@@ -17,7 +16,6 @@ class FeatureOptions {
 
   final String key;
   final FeatureType type;
-  final FeatureValueType valueType;
   final String title;
   final String description;
   final String remoteSourceKey;

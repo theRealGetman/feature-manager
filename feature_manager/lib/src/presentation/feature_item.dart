@@ -6,7 +6,7 @@ class _FeatureItem extends StatefulWidget {
     required this.onChanged,
   });
 
-  final Feature item;
+  final Feature<dynamic> item;
   final void Function(Object?) onChanged;
 
   @override
@@ -16,20 +16,19 @@ class _FeatureItem extends StatefulWidget {
 class _FeatureItemState extends State<_FeatureItem> {
   final TextEditingController textController = TextEditingController();
 
-  Feature get item => widget.item;
+  Feature<dynamic> get item => widget.item;
 
   @override
   Widget build(BuildContext context) {
     Widget typeSpecificWidget;
-    if (item.valueType == FeatureValueType.toggle) {
+    if (item.isBoolean) {
       typeSpecificWidget = Switch(
         value: item.value as bool? ?? (item.defaultValue as bool?)!,
         onChanged: (value) {
           _handleOnTap(context);
         },
       );
-    } else if (item.valueType == FeatureValueType.doubleNumber ||
-        item.valueType == FeatureValueType.integerNumber) {
+    } else if (item.isDouble || item.isInteger) {
       typeSpecificWidget = Text(
         item.value == null ? '${item.defaultValue}' : '${item.value}',
         style: Theme.of(context).textTheme.bodyLarge,
@@ -62,7 +61,7 @@ class _FeatureItemState extends State<_FeatureItem> {
   }
 
   void _handleOnTap(BuildContext context) {
-    if (item.valueType == FeatureValueType.toggle) {
+    if (item.isBoolean) {
       if (item.value == null) {
         widget.onChanged(!(item.defaultValue as bool));
       } else {
@@ -86,16 +85,15 @@ class _FeatureItemState extends State<_FeatureItem> {
 
   void _showDialog(BuildContext context) {
     Widget textField;
-    if (item.valueType == FeatureValueType.doubleNumber ||
-        item.valueType == FeatureValueType.integerNumber) {
+    if (item.isDouble || item.isInteger) {
       textController.text = item.value == null ? '${item.defaultValue}' : '${item.value}';
 
       textField = TextField(
-        keyboardType: item.valueType == FeatureValueType.integerNumber
+        keyboardType: item.isInteger
             ? TextInputType.number
             : const TextInputType.numberWithOptions(decimal: true),
         controller: textController,
-        maxLines: item.valueType == FeatureValueType.integerNumber ? 1 : null,
+        maxLines: item.isInteger ? 1 : null,
       );
     } else {
       textController.text = item.value as String? ?? (item.defaultValue as String?)!;
@@ -136,11 +134,11 @@ class _FeatureItemState extends State<_FeatureItem> {
               ),
               onPressed: () {
                 final text = textController.text;
-                if (item.valueType == FeatureValueType.doubleNumber) {
+                if (item.isDouble) {
                   widget.onChanged(
                     text.isEmpty ? 0.0 : double.tryParse(text),
                   );
-                } else if (item.valueType == FeatureValueType.integerNumber) {
+                } else if (item.isInteger) {
                   widget.onChanged(
                     text.isEmpty ? 0 : int.tryParse(text),
                   );

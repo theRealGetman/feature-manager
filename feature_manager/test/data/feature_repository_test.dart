@@ -1,4 +1,5 @@
 import 'package:feature_manager/feature.dart';
+import 'package:feature_manager/feature_manager.dart';
 import 'package:feature_manager/src/data/feature_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -6,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() {
   late FeatureRepository target;
   late SharedPreferences sharedPreferences;
-  final preferencesList = <Feature>[];
+  final preferencesList = <Feature<dynamic>>[];
 
   setUp(() async {
     SharedPreferences.setMockInitialValues(<String, Object>{});
@@ -20,11 +21,10 @@ void main() {
   group('putValue', () {
     test('when put value for toggle should store in shared preferences', () async {
       // given
-      const feature = Feature(
+      const feature = Feature<bool>(
         key: 'key',
         title: '',
         type: FeatureType.feature,
-        valueType: FeatureValueType.toggle,
       );
 
       // when
@@ -37,11 +37,10 @@ void main() {
 
     test('when put value for double should store in shared preferences', () async {
       // given
-      const feature = Feature(
+      const feature = Feature<double>(
         key: 'key',
         title: '',
         type: FeatureType.feature,
-        valueType: FeatureValueType.doubleNumber,
       );
 
       // when
@@ -54,11 +53,10 @@ void main() {
 
     test('when put value for integer should store in shared preferences', () async {
       // given
-      const feature = Feature(
+      const feature = Feature<int>(
         key: 'key',
         title: '',
         type: FeatureType.feature,
-        valueType: FeatureValueType.integerNumber,
       );
 
       // when
@@ -71,11 +69,10 @@ void main() {
 
     test('when put value for text should store in shared preferences', () async {
       // given
-      const feature = Feature(
+      const feature = Feature<String>(
         key: 'key',
         title: '',
         type: FeatureType.feature,
-        valueType: FeatureValueType.text,
       );
 
       // when
@@ -96,30 +93,27 @@ void main() {
         'double_key': 1.1,
         'integer_key': 101,
       });
+      await FeatureManager.getInstance();
       preferencesList.addAll([
-        const Feature(
+        const Feature<bool>(
           key: 'toggle_key',
           title: '',
           type: FeatureType.feature,
-          valueType: FeatureValueType.toggle,
         ),
-        const Feature(
+        const Feature<String>(
           key: 'text_key',
           title: '',
           type: FeatureType.feature,
-          valueType: FeatureValueType.text,
         ),
-        const Feature(
+        const Feature<double>(
           key: 'double_key',
           title: '',
           type: FeatureType.feature,
-          valueType: FeatureValueType.doubleNumber,
         ),
-        const Feature(
+        const Feature<int>(
           key: 'integer_key',
           title: '',
           type: FeatureType.feature,
-          valueType: FeatureValueType.integerNumber,
         ),
       ]);
       target = FeatureRepository(

@@ -1,114 +1,91 @@
 // ignore_for_file: avoid_equals_and_hash_code_on_mutable_classes
 
-class BooleanFeature extends Feature {
+class BooleanFeature extends Feature<bool> {
   BooleanFeature({
     required super.key,
     required super.title,
     super.description,
     super.remoteSourceKey,
-    bool? super.value,
-    bool? super.defaultValue,
+    super.defaultValue,
     super.type,
-  }) : super(
-          valueType: FeatureValueType.toggle,
-        );
+  });
 }
 
-class TextFeature extends Feature {
+class TextFeature extends Feature<String> {
   TextFeature({
     required super.key,
     required super.title,
     super.description,
     super.remoteSourceKey,
-    String? super.value,
-    String? super.defaultValue,
+    super.defaultValue,
     super.type,
-  }) : super(
-          valueType: FeatureValueType.text,
-        );
+  });
 }
 
-class DoubleFeature extends Feature {
+class DoubleFeature extends Feature<double> {
   DoubleFeature({
     required super.key,
     required super.title,
     super.description,
     super.remoteSourceKey,
-    double? super.value,
-    double? super.defaultValue,
+    super.defaultValue,
     super.type,
-  }) : super(
-          valueType: FeatureValueType.doubleNumber,
-        );
+  });
 }
 
-class IntegerFeature extends Feature {
+class IntegerFeature extends Feature<int> {
   IntegerFeature({
     required super.key,
     required super.title,
     super.description,
     super.remoteSourceKey,
-    int? super.value,
-    int? super.defaultValue,
+    super.defaultValue,
     super.type,
-  }) : super(
-          valueType: FeatureValueType.integerNumber,
-        );
+  });
 }
 
-class JsonFeature extends Feature {
+class JsonFeature extends Feature<Object> {
   JsonFeature({
     required super.key,
     required super.title,
     super.description,
     super.remoteSourceKey,
-    super.value,
     super.defaultValue,
     super.type,
-  }) : super(
-          valueType: FeatureValueType.json,
-        );
+  });
 }
 
-class Feature {
+class Feature<T> {
   const Feature({
     required this.key,
-    required this.valueType,
     required this.title,
     this.type = FeatureType.feature,
     this.description = '',
     this.remoteSourceKey = '',
-    this.value,
     this.defaultValue,
   });
 
   final String key;
   final FeatureType type;
-  final FeatureValueType valueType;
   final String title;
   final String description;
   final String remoteSourceKey;
-  final Object? value;
-  final Object? defaultValue;
+  final T? defaultValue;
 
-  Feature copyWith({
+  Feature<T> copyWith({
     String? key,
     FeatureType? type,
-    FeatureValueType? valueType,
     String? title,
     String? description,
     String? remoteSourceKey,
-    Object? value,
-    Object? defaultValue,
+    T? defaultValue,
   }) {
     return Feature(
       key: key ?? this.key,
       type: type ?? this.type,
-      valueType: valueType ?? this.valueType,
       title: title ?? this.title,
       description: description ?? this.description,
       remoteSourceKey: remoteSourceKey ?? this.remoteSourceKey,
-      value: value ?? this.value,
       defaultValue: defaultValue ?? this.defaultValue,
     );
   }
@@ -120,30 +97,24 @@ class Feature {
           runtimeType == other.runtimeType &&
           key == other.key &&
           type == other.type &&
-          valueType == other.valueType &&
           title == other.title &&
           description == other.description &&
           remoteSourceKey == other.remoteSourceKey &&
-          value == other.value &&
           defaultValue == other.defaultValue;
 
   @override
   int get hashCode =>
       key.hashCode ^
       type.hashCode ^
-      valueType.hashCode ^
       title.hashCode ^
       description.hashCode ^
       remoteSourceKey.hashCode ^
-      value.hashCode ^
       defaultValue.hashCode;
 
   @override
   String toString() {
-    return 'Feature{key: $key, type: $type, valueType: $valueType, title: $title, description: $description, remoteSourceKey: $remoteSourceKey, value: $value, defaultValue: $defaultValue}';
+    return 'Feature{key: $key, type: $type, title: $title, description: $description, remoteSourceKey: $remoteSourceKey, defaultValue: $defaultValue}';
   }
 }
 
 enum FeatureType { feature, experiment }
-
-enum FeatureValueType { text, toggle, doubleNumber, integerNumber, json }

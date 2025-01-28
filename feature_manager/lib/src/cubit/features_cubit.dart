@@ -11,7 +11,7 @@ class FeaturesCubit extends Cubit<FeaturesState> {
   FeaturesCubit(this.repository) : super(FeaturesInitial());
 
   final FeatureRepository repository;
-  StreamSubscription<List<Feature>>? _featuresSubscription;
+  StreamSubscription<List<Feature<dynamic>>>? _featuresSubscription;
 
   Future<void> getFeatures() async {
     try {
@@ -35,7 +35,7 @@ class FeaturesCubit extends Cubit<FeaturesState> {
   }
 
   Future<void> changeFeature(
-    Feature feature,
+    Feature<dynamic> feature,
     Object? value,
   ) async {
     try {
