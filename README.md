@@ -71,18 +71,16 @@ class AppFeatures {
     title: 'Text pref',
     description: 'This is text preference',
     defaultValue: '',
-    valueType: FeatureValueType.text,
   )
-  final Feature textFeature;
+  final Feature<String> textFeature;
 
   @FeatureOptions(
     key: 'dev-prefs-bool-pref',
     title: 'Toggle pref',
     description: 'This is toggle preference',
     defaultValue: false,
-    valueType: FeatureValueType.toggle,
   )
-  final Feature booleanFeature;
+  final Feature<bool> booleanFeature;
 
   @FeatureOptions(
     key: 'dev-prefs-double-pref',
@@ -91,7 +89,7 @@ class AppFeatures {
     defaultValue: null,
     valueType: FeatureValueType.doubleNumber,
   )
-  final Feature doubleFeature;
+  final Feature<double> doubleFeature;
 
   @FeatureOptions(
     key: 'dev-prefs-integer-pref',
@@ -100,7 +98,7 @@ class AppFeatures {
     defaultValue: null,
     valueType: FeatureValueType.integerNumber,
   )
-  final Feature integerFeature;
+  final Feature<int> integerFeature;
 
   @FeatureOptions(
     key: 'dev-prefs-json-pref',
@@ -109,7 +107,7 @@ class AppFeatures {
     defaultValue: "{value: 'Json default value'}",
     valueType: FeatureValueType.json,
   )
-  final Feature jsonFeature;
+  final Feature<Object> jsonFeature;
 }
 ```
 
@@ -196,19 +194,13 @@ Navigator.of(context).push(
 | :------------------------------- | :-------------------: | :------------------------------------------------------------------------------------------- |
 | **key** _String_                 |       required        | This key will be used to store value in local storage.                                       |
 | **type** _FeatureType_           | `FeatureType.feature` | It can be used to separate local features and experiments driven by some remote provider.    |
-| **valueType** _FeatureValueType_ |       required        | Type of value of the feature. If you need toggle, use `FeatureValueType.toggle`              |
 | **title** _String_               |       required        | Title that will be used inside Developer Preferences Screen.                                 |
 | **remoteSourceKey** _String_     |                       | Key from remote source.                                                                      |
 | **description** _String_         |                       | Description that will be used inside Developer Preferences Screen.                           |
-| **value** _Object?_              |         Null          | Stored value of the Feature. Will be fetched from local storage.                             |
 | **defaultValue** _Object?_       |         Null          | Default value of the Feature. Will be returned by `FeatureManager` if stored value is `Null` |
 
 ```dart
 enum FeatureType { feature, experiment }
-```
-
-```dart
-enum FeatureValueType { text, toggle, doubleNumber, integerNumber, json }
 ```
 
 ## Contributions

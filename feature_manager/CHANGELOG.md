@@ -1,3 +1,37 @@
+## 3.0.4
+
+### Breaking Changes 🔥
+
+#### Updated Feature Model:
+
+- Feature<T> now relies solely on its generic type for determining feature behavior.
+- Removed FeatureValueType references in favor of type inference.
+
+```dart
+// Old
+@FeatureOptions(
+    key: 'dev-prefs-bool-pref',
+    title: 'Toggle pref',
+    description: 'This is toggle preference',
+    defaultValue: false,
+    valueType: FeatureValueType.toggle,
+)
+final Feature booleanFeature;
+
+// New (no need for valueType)
+@FeatureOptions(
+    key: 'dev-prefs-bool-pref',
+    title: 'Toggle pref',
+    description: 'This is toggle preference',
+    defaultValue: false,
+  )
+final Feature<bool> booleanFeature;
+```
+
+#### Compatibility with feature_manager_generator:
+
+- Ensure your code is compatible by migrating away from FeatureValueType.
+
 ## 3.0.2
 
 - Removed unused `value` Parameter from `FeatureOptions`:

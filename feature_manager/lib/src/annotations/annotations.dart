@@ -4,7 +4,7 @@ class FeatureManagerInit {
   const FeatureManagerInit();
 }
 
-class FeatureOptions<T> {
+class FeatureOptions {
   const FeatureOptions({
     required this.key,
     required this.title,
