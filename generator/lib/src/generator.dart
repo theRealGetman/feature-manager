@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:feature_manager/annotations.dart';
 import 'package:feature_manager/feature.dart';
@@ -50,7 +53,12 @@ class FeatureGenerator extends GeneratorForAnnotation<FeatureManagerInit> {
         continue;
       }
 
-      final featureType = _getFeatureType(featureOptions.valueType);
+      final featureType = _getGenericFeatureType(field);
+      if (featureType == null) {
+        log.warning('Field ${field.name} does not have a valid generic Feature<T> type.');
+        continue;
+      }
+
       final initializer = _generateFeatureInitializer(field.name, featureType, featureOptions);
       initializers.add(initializer);
 
@@ -88,7 +96,7 @@ class FeatureGenerator extends GeneratorForAnnotation<FeatureManagerInit> {
       if (featureOptions == null) {
         continue;
       }
-      final featureType = _getFeatureType(featureOptions.valueType);
+      final featureType = _getGenericFeatureType(field);
       buffer.writeln(
         '  $featureType get ${field.name} => _\$${classElement.name}().${field.name};',
       );
@@ -99,19 +107,28 @@ class FeatureGenerator extends GeneratorForAnnotation<FeatureManagerInit> {
     return generatedCode;
   }
 
-  String _getFeatureType(FeatureValueType valueType) {
-    switch (valueType) {
-      case FeatureValueType.toggle:
+  String? _getGenericFeatureType(FieldElement field) {
+    final featureInterface = field.type.element;
+    if (featureInterface is ClassElement && featureInterface.name == 'Feature') {
+      final typeArguments = (field.type as ParameterizedType).typeArguments;
+      if (typeArguments.isEmpty) {
+        return null;
+      }
+      final genericType = typeArguments.first;
+
+      if (genericType.isDartCoreBool) {
         return 'BooleanFeature';
-      case FeatureValueType.text:
+      } else if (genericType.isDartCoreString) {
         return 'TextFeature';
-      case FeatureValueType.doubleNumber:
+      } else if (genericType.isDartCoreDouble) {
         return 'DoubleFeature';
-      case FeatureValueType.integerNumber:
+      } else if (genericType.isDartCoreInt) {
         return 'IntegerFeature';
-      case FeatureValueType.json:
+      } else {
         return 'JsonFeature';
+      }
     }
+    return null;
   }
 
   FeatureOptions? _getFeatureOptions(FieldElement field) {
@@ -133,8 +150,6 @@ class FeatureGenerator extends GeneratorForAnnotation<FeatureManagerInit> {
         defaultValue: defaultValue,
         type:
             FeatureType.values[elementValue.getField('type')?.getField('index')?.toIntValue() ?? 0],
-        valueType: FeatureValueType
-            .values[elementValue.getField('valueType')?.getField('index')?.toIntValue() ?? 0],
       );
     }
     return null;
@@ -158,6 +173,8 @@ class FeatureGenerator extends GeneratorForAnnotation<FeatureManagerInit> {
       return object.toDoubleValue();
     } else if (type.isDartCoreBool) {
       return object.toBoolValue();
+    } else if (type.isDartCoreMap) {
+      return _dartObjectToMap(object);
     }
     return null;
   }
@@ -174,12 +191,32 @@ class FeatureGenerator extends GeneratorForAnnotation<FeatureManagerInit> {
         )''';
   }
 
-  String _formatDefaultValue(dynamic value) {
+  dynamic _formatDefaultValue(dynamic value) {
     if (value is String) {
       return "'${value.replaceAll("'", r"\'")}'";
     } else if (value is bool || value is num) {
       return value.toString();
+    } else if (value is Map<String, dynamic>) {
+      return jsonEncode(value);
     }
     return 'null';
+  }
+
+  Map<String, dynamic> _dartObjectToMap(DartObject object) {
+    final result = <String, dynamic>{};
+    final map = object.toMapValue();
+
+    if (map != null) {
+      for (final entry in map.entries) {
+        final key = entry.key?.toStringValue();
+        final value = _getLiteralValue(entry.value);
+
+        if (key != null) {
+          result[key] = value;
+        }
+      }
+    }
+
+    return result;
   }
 }

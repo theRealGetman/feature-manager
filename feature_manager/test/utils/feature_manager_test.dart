@@ -12,11 +12,10 @@ void main() {
       SharedPreferences.setMockInitialValues(<String, Object>{
         'key': true,
       });
-      const feature = Feature(
+      const feature = Feature<bool>(
         key: 'key',
         title: '',
         type: FeatureType.feature,
-        valueType: FeatureValueType.toggle,
       );
 
       // when
@@ -30,11 +29,10 @@ void main() {
     test('when feature is toggle and value is null should return default value', () async {
       // given
       SharedPreferences.setMockInitialValues(<String, Object>{});
-      const feature = Feature(
+      const feature = Feature<bool>(
         key: 'key',
         title: '',
         type: FeatureType.feature,
-        valueType: FeatureValueType.toggle,
         defaultValue: true,
       );
 
@@ -50,29 +48,10 @@ void main() {
         () async {
       // given
       SharedPreferences.setMockInitialValues(<String, Object>{});
-      const feature = Feature(
+      const feature = Feature<bool>(
         key: 'key',
         title: '',
         type: FeatureType.feature,
-        valueType: FeatureValueType.toggle,
-      );
-
-      // when
-      final featureManager = await FeatureManager.getInstance();
-      final value = featureManager.isEnabled(feature);
-
-      // then
-      expect(value, false);
-    });
-
-    test('when feature is not toggle should return false', () async {
-      // given
-      SharedPreferences.setMockInitialValues(<String, Object>{});
-      const feature = Feature(
-        key: 'key',
-        title: '',
-        type: FeatureType.feature,
-        valueType: FeatureValueType.text,
       );
 
       // when
@@ -90,11 +69,10 @@ void main() {
       SharedPreferences.setMockInitialValues(<String, Object>{
         'key': 'some text',
       });
-      const feature = Feature(
+      const feature = Feature<String>(
         key: 'key',
         title: '',
         type: FeatureType.feature,
-        valueType: FeatureValueType.text,
       );
 
       // when
@@ -108,11 +86,10 @@ void main() {
     test('when stored value is null should return default value', () async {
       // given
       SharedPreferences.setMockInitialValues(<String, Object>{});
-      const feature = Feature(
+      const feature = Feature<String>(
         key: 'key',
         title: '',
         type: FeatureType.feature,
-        valueType: FeatureValueType.text,
         defaultValue: 'default text',
       );
 

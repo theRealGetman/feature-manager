@@ -25,7 +25,7 @@ class FeatureManager {
   }
 
   /// Returns the singleton instance of [FeatureManager].
-  /// 
+  ///
   /// Throws an [Exception] if the instance is not initialized.
   /// Ensure to call `getInstance()` before accessing this property.
   static FeatureManager get instance {
@@ -44,80 +44,74 @@ class FeatureManager {
 
   /// Determines if the given [feature] is enabled.
   ///
-  /// The function checks if the [feature]'s value type is [FeatureValueType.toggle].
-  /// If it is, the function retrieves the boolean value associated with the [feature]'s key
-  /// from the shared preferences. If the value is not found, it returns the default value
-  /// of the [feature] if it is of type bool. If the default value is not available, it returns false.
-  /// If the [feature]'s value type is not [FeatureValueType.toggle], the function returns false.
+  /// Retrieves the boolean value associated with the [feature]'s key from the shared preferences.
+  /// If the value is not found, returns the feature's default value, or false if no default is set.
   ///
   /// Parameters:
-  /// - `feature`: The [Feature] object to check.
+  /// - `feature`: The [Feature<bool>] object to check.
   ///
   /// Returns:
-  /// - `bool`: `true` if the [feature] is enabled, `false` otherwise.
-  bool isEnabled(Feature feature) {
-    if (feature.valueType == FeatureValueType.toggle) {
-      return _sharedPreferences.getBool(feature.key) ?? feature.defaultValue as bool? ?? false;
-    } else {
-      return false;
-    }
+  /// - `bool`: `true` if the feature is enabled, `false` otherwise.
+  bool isEnabled(Feature<bool> feature) {
+    return _sharedPreferences.getBool(feature.key) ?? feature.defaultValue ?? false;
   }
 
   /// Retrieves the value associated with the given [feature] from the shared preferences.
   ///
-  /// The function first checks if there is a value stored for the given [feature] key in the shared preferences.
-  /// If a value is found, it is returned. Otherwise, the default value of the [feature] is returned.
-  ///
   /// Parameters:
-  ///   - `feature`: The [Feature] object for which the value needs to be retrieved.
+  ///   - `feature`: The [Feature<T>] object for which the value needs to be retrieved.
   ///
   /// Returns:
-  ///   - The value associated with the [feature] key in the shared preferences, or the default value of the [feature] if no value is found.
-  Object? getValue(Feature feature) {
+  ///   - The value associated with the feature key in the shared preferences, or the feature's default value if no value is found.
+  dynamic getValue(Feature<dynamic> feature) {
     return _sharedPreferences.get(feature.key) ?? feature.defaultValue;
   }
 
-  /// Retrieves a string value from the shared preferences based on the provided [feature] key.
+  /// Retrieves a string value from the shared preferences for the provided [Feature<String>].
   ///
-  /// The [feature] parameter specifies the feature for which the string value is retrieved.
+  /// Parameters:
+  ///   - `feature`: The [Feature<String>] for which to retrieve the value.
   ///
-  /// Returns the string value associated with the [feature] key, or `null` if the key does not exist.
-  String? getString(Feature feature) {
-    return _sharedPreferences.getString(feature.key);
+  /// Returns:
+  ///   The string value, or `null` if not found.
+  String? getString(Feature<String> feature) {
+    return _sharedPreferences.getString(feature.key) ?? feature.defaultValue;
   }
 
-  /// Retrieves an integer value associated with the given [feature] from the shared preferences.
+  /// Retrieves an integer value from the shared preferences for the provided [Feature<int>].
   ///
-  /// The [feature] parameter specifies the feature for which the integer value is to be retrieved.
+  /// Parameters:
+  ///   - `feature`: The [Feature<int>] for which to retrieve the value.
   ///
-  /// Returns the integer value associated with the [feature] key in the shared preferences, or null if the key is not found.
-  int? getInt(Feature feature) {
-    return _sharedPreferences.getInt(feature.key);
+  /// Returns:
+  ///   The integer value, or `null` if not found.
+  int? getInt(Feature<int> feature) {
+    return _sharedPreferences.getInt(feature.key) ?? feature.defaultValue;
   }
 
-  /// Retrieves a double value associated with the given [feature].
+  /// Retrieves a double value from the shared preferences for the provided [Feature<double>].
   ///
-  /// The [feature] parameter specifies the feature for which the double value is
-  /// to be retrieved.
+  /// Parameters:
+  ///   - `feature`: The [Feature<double>] for which to retrieve the value.
   ///
-  /// Returns the double value associated with the given [feature], or null if
-  /// no value is found.
-  double? getDouble(Feature feature) {
-    return _sharedPreferences.getDouble(feature.key);
+  /// Returns:
+  ///   The double value, or `null` if not found.
+  double? getDouble(Feature<double> feature) {
+    return _sharedPreferences.getDouble(feature.key) ?? feature.defaultValue;
   }
 
-  /// Retrieves and decodes a JSON string from the provided Feature object, returning the decoded Map<String, dynamic> or null if the string is empty or null.
+  /// Retrieves and decodes a JSON string from the provided feature.
   ///
-  /// The [feature] parameter specifies the feature for which the double value is
-  /// to be retrieved.
+  /// The feature must be of type [Feature<Map<String, dynamic>>] containing a JSON string.
   ///
-  /// Returns the decoded Map<String, dynamic> if the JSON string is not empty or null; otherwise, returns null.
-  Map<String, dynamic>? getJson(Feature feature) {
-    final value = getString(feature);
+  /// Returns:
+  ///   A Map<String, dynamic> containing the decoded JSON, or `null` if the string
+  ///   is empty or invalid.
+  Map<String, dynamic>? getJson(Feature<Map<String, dynamic>> feature) {
+    final value = _sharedPreferences.getString(feature.key);
     if (value == null || value.isEmpty) {
-      return null;
+      return feature.defaultValue;
     }
-    final decodedMap = jsonDecode(value) as Map<String, dynamic>;
-    return decodedMap;
+    return jsonDecode(value) as Map<String, dynamic>;
   }
 }

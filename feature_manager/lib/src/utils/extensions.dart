@@ -7,26 +7,35 @@ extension BooleanFeatureExt on BooleanFeature {
   bool get isEnabled => FeatureManager.instance.isEnabled(this);
 }
 
-/// Extension on `DoubleFeature` to get the feature's value.
-extension DoubleFeatureExt on DoubleFeature {
-  /// Returns the value of the feature as a `double`, or `null` if not set.
-  double? get value => FeatureManager.instance.getDouble(this);
-}
+extension FeatureBooleanExt<T> on Feature<T> {
+  T? get value {
+    if (isBoolean) {
+      return FeatureManager.instance.isEnabled(this as Feature<bool>) as T?;
+    } else if (isText) {
+      return FeatureManager.instance.getString(this as Feature<String>) as T?;
+    } else if (isDouble) {
+      return FeatureManager.instance.getDouble(this as Feature<double>) as T?;
+    } else if (isInteger) {
+      return FeatureManager.instance.getInt(this as Feature<int>) as T?;
+    } else if (isJson) {
+      return FeatureManager.instance.getJson(this as Feature<Map<String, dynamic>>) as T?;
+    } else {
+      throw Exception('Unsupported feature type');
+    }
+  }
 
-/// Extension on `IntegerFeature` to get the feature's value.
-extension IntegerFeatureExt on IntegerFeature {
-  /// Returns the value of the feature as an `int`, or `null` if not set.
-  int? get value => FeatureManager.instance.getInt(this);
-}
+  /// Returns true if this Boolean Feature
+  bool get isBoolean => this is Feature<bool>;
 
-/// Extension on `TextFeature` to get the feature's value.
-extension TextFeatureExt on TextFeature {
-  /// Returns the value of the feature as a `String`, or `null` if not set.
-  String? get value => FeatureManager.instance.getString(this);
-}
+  /// Returns true if this Text Feature
+  bool get isText => this is Feature<String>;
 
-/// Extension on `Feature` to get the feature's value.
-extension FeatureExt on Feature {
-  /// Returns the value of the feature as an `Object`, or `null` if not set.
-  Object? get value => FeatureManager.instance.getValue(this);
+  /// Returns true if this Double Feature
+  bool get isDouble => this is Feature<double>;
+
+  /// Returns true if this Integer Feature
+  bool get isInteger => this is Feature<int>;
+
+  /// Returns true if this Json Feature
+  bool get isJson => this is Feature<Object>;
 }

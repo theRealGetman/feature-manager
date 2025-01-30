@@ -51,11 +51,11 @@ class _$AppFeatures implements AppFeatures {
           remoteSourceKey: '',
           title: 'Json pref',
           description: 'This is json preference',
-          defaultValue: '{value: \'Json default value\'}',
+          defaultValue: {"value": "Json default value"},
           type: FeatureType.feature,
         ),
         nullableTextFeature = TextFeature(
-          key: 'dev-prefs-text-pref',
+          key: 'dev-prefs-text-pref-nullable',
           remoteSourceKey: '',
           title: 'Text pref',
           description: 'This is text preference',
