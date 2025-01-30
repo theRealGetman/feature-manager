@@ -68,11 +68,12 @@ class AppFeatures {
 
   @FeatureOptions(
     key: 'dev-prefs-text-pref',
+    remoteSourceKey: 'REMOTE-KEY-dev-prefs-text-pref',
     title: 'Text pref',
     description: 'This is text preference',
-    defaultValue: '',
+    defaultValue: 'Some default text',
   )
-  final Feature<String> textFeature;
+  final TextFeature textFeature;
 
   @FeatureOptions(
     key: 'dev-prefs-bool-pref',
@@ -80,34 +81,31 @@ class AppFeatures {
     description: 'This is toggle preference',
     defaultValue: false,
   )
-  final Feature<bool> booleanFeature;
+  final BooleanFeature booleanFeature;
 
   @FeatureOptions(
     key: 'dev-prefs-double-pref',
     title: 'Number double pref',
     description: 'This is number double preference',
-    defaultValue: null,
-    valueType: FeatureValueType.doubleNumber,
+    defaultValue: 2.2,
   )
-  final Feature<double> doubleFeature;
+  final DoubleFeature doubleFeature;
 
   @FeatureOptions(
     key: 'dev-prefs-integer-pref',
     title: 'Number integer pref',
     description: 'This is number integer preference',
-    defaultValue: null,
-    valueType: FeatureValueType.integerNumber,
+    defaultValue: 1,
   )
-  final Feature<int> integerFeature;
+  final IntegerFeature integerFeature;
 
   @FeatureOptions(
     key: 'dev-prefs-json-pref',
     title: 'Json pref',
     description: 'This is json preference',
-    defaultValue: "{value: 'Json default value'}",
-    valueType: FeatureValueType.json,
+    defaultValue: {"value": "Json default value"},
   )
-  final Feature<Object> jsonFeature;
+  final JsonFeature jsonFeature;
 }
 ```
 
@@ -190,14 +188,14 @@ Navigator.of(context).push(
 
 ### Feature parameters
 
-| Parameter                        |        Default        | Description                                                                                  |
-| :------------------------------- | :-------------------: | :------------------------------------------------------------------------------------------- |
-| **key** _String_                 |       required        | This key will be used to store value in local storage.                                       |
-| **type** _FeatureType_           | `FeatureType.feature` | It can be used to separate local features and experiments driven by some remote provider.    |
-| **title** _String_               |       required        | Title that will be used inside Developer Preferences Screen.                                 |
-| **remoteSourceKey** _String_     |                       | Key from remote source.                                                                      |
-| **description** _String_         |                       | Description that will be used inside Developer Preferences Screen.                           |
-| **defaultValue** _Object?_       |         Null          | Default value of the Feature. Will be returned by `FeatureManager` if stored value is `Null` |
+| Parameter                    |        Default        | Description                                                                                  |
+| :--------------------------- | :-------------------: | :------------------------------------------------------------------------------------------- |
+| **key** _String_             |       required        | This key will be used to store value in local storage.                                       |
+| **type** _FeatureType_       | `FeatureType.feature` | It can be used to separate local features and experiments driven by some remote provider.    |
+| **title** _String_           |       required        | Title that will be used inside Developer Preferences Screen.                                 |
+| **remoteSourceKey** _String_ |                       | Key from remote source.                                                                      |
+| **description** _String_     |                       | Description that will be used inside Developer Preferences Screen.                           |
+| **defaultValue** _Object?_   |         Null          | Default value of the Feature. Will be returned by `FeatureManager` if stored value is `Null` |
 
 ```dart
 enum FeatureType { feature, experiment }

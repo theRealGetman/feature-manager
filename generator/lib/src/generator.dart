@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
@@ -171,6 +173,8 @@ class FeatureGenerator extends GeneratorForAnnotation<FeatureManagerInit> {
       return object.toDoubleValue();
     } else if (type.isDartCoreBool) {
       return object.toBoolValue();
+    } else if (type.isDartCoreMap) {
+      return _dartObjectToMap(object);
     }
     return null;
   }
@@ -187,12 +191,32 @@ class FeatureGenerator extends GeneratorForAnnotation<FeatureManagerInit> {
         )''';
   }
 
-  String _formatDefaultValue(dynamic value) {
+  dynamic _formatDefaultValue(dynamic value) {
     if (value is String) {
       return "'${value.replaceAll("'", r"\'")}'";
     } else if (value is bool || value is num) {
       return value.toString();
+    } else if (value is Map<String, dynamic>) {
+      return jsonEncode(value);
     }
     return 'null';
+  }
+
+  Map<String, dynamic> _dartObjectToMap(DartObject object) {
+    final result = <String, dynamic>{};
+    final map = object.toMapValue();
+
+    if (map != null) {
+      for (final entry in map.entries) {
+        final key = entry.key?.toStringValue();
+        final value = _getLiteralValue(entry.value);
+
+        if (key != null) {
+          result[key] = value;
+        }
+      }
+    }
+
+    return result;
   }
 }

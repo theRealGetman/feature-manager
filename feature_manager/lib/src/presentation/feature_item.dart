@@ -96,7 +96,13 @@ class _FeatureItemState extends State<_FeatureItem> {
         maxLines: item.isInteger ? 1 : null,
       );
     } else {
-      textController.text = item.value as String? ?? (item.defaultValue as String?)!;
+      if (item.isJson) {
+        textController.text = jsonEncode(
+          item.value as Map<String, dynamic>? ?? (item.defaultValue as Map<String, dynamic>?) ?? {},
+        );
+      } else {
+        textController.text = item.value as String? ?? (item.defaultValue as String?) ?? '';
+      }
 
       textField = TextField(
         controller: textController,
@@ -135,13 +141,11 @@ class _FeatureItemState extends State<_FeatureItem> {
               onPressed: () {
                 final text = textController.text;
                 if (item.isDouble) {
-                  widget.onChanged(
-                    text.isEmpty ? 0.0 : double.tryParse(text),
-                  );
+                  widget.onChanged(text.isEmpty ? 0.0 : double.tryParse(text));
                 } else if (item.isInteger) {
-                  widget.onChanged(
-                    text.isEmpty ? 0 : int.tryParse(text),
-                  );
+                  widget.onChanged(text.isEmpty ? 0 : int.tryParse(text));
+                } else if (item.isJson) {
+                  widget.onChanged(text.isEmpty ? null : jsonEncode(text));
                 } else {
                   widget.onChanged(text);
                 }

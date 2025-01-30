@@ -9,16 +9,16 @@ extension BooleanFeatureExt on BooleanFeature {
 
 extension FeatureBooleanExt<T> on Feature<T> {
   T? get value {
-    if (this is Feature<bool>) {
+    if (isBoolean) {
       return FeatureManager.instance.isEnabled(this as Feature<bool>) as T?;
-    } else if (this is Feature<String>) {
+    } else if (isText) {
       return FeatureManager.instance.getString(this as Feature<String>) as T?;
-    } else if (this is Feature<double>) {
+    } else if (isDouble) {
       return FeatureManager.instance.getDouble(this as Feature<double>) as T?;
-    } else if (this is Feature<int>) {
+    } else if (isInteger) {
       return FeatureManager.instance.getInt(this as Feature<int>) as T?;
-    } else if (this is Feature<Object>) {
-      return FeatureManager.instance.getValue(this as Feature<Object>) as T;
+    } else if (isJson) {
+      return FeatureManager.instance.getJson(this as Feature<Map<String, dynamic>>) as T?;
     } else {
       throw Exception('Unsupported feature type');
     }

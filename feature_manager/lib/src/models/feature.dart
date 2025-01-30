@@ -1,59 +1,19 @@
 // ignore_for_file: avoid_equals_and_hash_code_on_mutable_classes
 
-class BooleanFeature extends Feature<bool> {
-  BooleanFeature({
-    required super.key,
-    required super.title,
-    super.description,
-    super.remoteSourceKey,
-    super.defaultValue,
-    super.type,
-  });
+enum FeatureType {
+  feature,
+  experiment;
 }
 
-class TextFeature extends Feature<String> {
-  TextFeature({
-    required super.key,
-    required super.title,
-    super.description,
-    super.remoteSourceKey,
-    super.defaultValue,
-    super.type,
-  });
-}
+typedef BooleanFeature = Feature<bool>;
 
-class DoubleFeature extends Feature<double> {
-  DoubleFeature({
-    required super.key,
-    required super.title,
-    super.description,
-    super.remoteSourceKey,
-    super.defaultValue,
-    super.type,
-  });
-}
+typedef TextFeature = Feature<String>;
 
-class IntegerFeature extends Feature<int> {
-  IntegerFeature({
-    required super.key,
-    required super.title,
-    super.description,
-    super.remoteSourceKey,
-    super.defaultValue,
-    super.type,
-  });
-}
+typedef DoubleFeature = Feature<double>;
 
-class JsonFeature extends Feature<Object> {
-  JsonFeature({
-    required super.key,
-    required super.title,
-    super.description,
-    super.remoteSourceKey,
-    super.defaultValue,
-    super.type,
-  });
-}
+typedef IntegerFeature = Feature<int>;
+
+typedef JsonFeature = Feature<Map<String, dynamic>>;
 
 class Feature<T> {
   const Feature({
@@ -116,5 +76,3 @@ class Feature<T> {
     return 'Feature{key: $key, type: $type, title: $title, description: $description, remoteSourceKey: $remoteSourceKey, defaultValue: $defaultValue}';
   }
 }
-
-enum FeatureType { feature, experiment }

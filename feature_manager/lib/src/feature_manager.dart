@@ -107,12 +107,11 @@ class FeatureManager {
   /// Returns:
   ///   A Map<String, dynamic> containing the decoded JSON, or `null` if the string
   ///   is empty or invalid.
-  Map<String, dynamic>? getJson(Feature<dynamic> feature) {
-    final value = getString(feature as Feature<String>);
+  Map<String, dynamic>? getJson(Feature<Map<String, dynamic>> feature) {
+    final value = _sharedPreferences.getString(feature.key);
     if (value == null || value.isEmpty) {
       return null;
     }
-    final decodedMap = jsonDecode(value) as Map<String, dynamic>;
-    return decodedMap;
+    return jsonDecode(value) as Map<String, dynamic>;
   }
 }
