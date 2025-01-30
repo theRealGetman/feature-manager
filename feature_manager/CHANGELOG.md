@@ -4,7 +4,7 @@
 
 #### Updated Feature Model:
 
-- Feature<T> now relies solely on its generic type for determining feature behavior.
+- `Feature<T>` now relies solely on its generic type for determining feature behavior.
 - Removed FeatureValueType references in favor of type inference.
 
 ```dart
