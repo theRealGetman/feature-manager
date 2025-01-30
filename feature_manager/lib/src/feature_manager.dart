@@ -75,7 +75,7 @@ class FeatureManager {
   /// Returns:
   ///   The string value, or `null` if not found.
   String? getString(Feature<String> feature) {
-    return _sharedPreferences.getString(feature.key);
+    return _sharedPreferences.getString(feature.key) ?? feature.defaultValue;
   }
 
   /// Retrieves an integer value from the shared preferences for the provided [Feature<int>].
@@ -86,7 +86,7 @@ class FeatureManager {
   /// Returns:
   ///   The integer value, or `null` if not found.
   int? getInt(Feature<int> feature) {
-    return _sharedPreferences.getInt(feature.key);
+    return _sharedPreferences.getInt(feature.key) ?? feature.defaultValue;
   }
 
   /// Retrieves a double value from the shared preferences for the provided [Feature<double>].
@@ -97,12 +97,12 @@ class FeatureManager {
   /// Returns:
   ///   The double value, or `null` if not found.
   double? getDouble(Feature<double> feature) {
-    return _sharedPreferences.getDouble(feature.key);
+    return _sharedPreferences.getDouble(feature.key) ?? feature.defaultValue;
   }
 
   /// Retrieves and decodes a JSON string from the provided feature.
   ///
-  /// The feature must be of type [Feature<String>] containing a JSON string.
+  /// The feature must be of type [Feature<Map<String, dynamic>>] containing a JSON string.
   ///
   /// Returns:
   ///   A Map<String, dynamic> containing the decoded JSON, or `null` if the string
@@ -110,7 +110,7 @@ class FeatureManager {
   Map<String, dynamic>? getJson(Feature<Map<String, dynamic>> feature) {
     final value = _sharedPreferences.getString(feature.key);
     if (value == null || value.isEmpty) {
-      return null;
+      return feature.defaultValue;
     }
     return jsonDecode(value) as Map<String, dynamic>;
   }
