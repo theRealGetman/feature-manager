@@ -1,3 +1,9 @@
+## 3.0.5
+
+- Fixed an issue where the Developer Preferences screen did not update after a value change.
+- Resolved an issue causing the `TextFeature` to appear under the `JsonFeature` flow.
+- Fixed a saving issue in the `JsonFeature`.
+
 ## 3.0.4
 
 ### Breaking Changes 🔥

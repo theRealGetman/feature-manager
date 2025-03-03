@@ -145,7 +145,7 @@ class _FeatureItemState extends State<_FeatureItem> {
                 } else if (item.isInteger) {
                   widget.onChanged(text.isEmpty ? 0 : int.tryParse(text));
                 } else if (item.isJson) {
-                  widget.onChanged(text.isEmpty ? null : jsonEncode(text));
+                  widget.onChanged(text.isEmpty ? null : jsonDecode(text));
                 } else {
                   widget.onChanged(text);
                 }

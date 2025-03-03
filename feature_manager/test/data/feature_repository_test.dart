@@ -122,7 +122,7 @@ void main() {
       );
 
       // when
-      final features = await target.getFeatures();
+      final features = target.getFeatures();
 
       // then
       expect(features[0].value, true);

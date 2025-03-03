@@ -7,23 +7,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class FeatureRepository {
   FeatureRepository({
-    required this.featuresList,
+    required List<Feature<dynamic>> featuresList,
     required SharedPreferences sharedPreferences,
-  }) : _sharedPreferences = sharedPreferences {
-    _featuresStreamController = StreamController<List<Feature<dynamic>>>.broadcast();
-  }
+  })  : _featuresList = featuresList,
+        _sharedPreferences = sharedPreferences;
 
-  final List<Feature<dynamic>> featuresList;
+  final List<Feature<dynamic>> _featuresList;
   final SharedPreferences _sharedPreferences;
 
-  late StreamController<List<Feature<dynamic>>> _featuresStreamController;
-
-  Stream<List<Feature<dynamic>>> getFeaturesStream() => _featuresStreamController.stream;
-
-  Future<List<Feature<dynamic>>> getFeatures() async {
-    _featuresStreamController.add(featuresList);
-    return featuresList;
-  }
+  List<Feature<dynamic>> getFeatures() => _featuresList;
 
   Future<void> putValue(
     Feature<dynamic> feature,
@@ -31,7 +23,6 @@ class FeatureRepository {
   ) async {
     if (value == null) {
       await _sharedPreferences.remove(feature.key);
-      await getFeatures();
       return;
     }
     if (feature.isText && value is String) {
@@ -47,6 +38,5 @@ class FeatureRepository {
     } else {
       throw Exception('Invalid value type');
     }
-    await getFeatures();
   }
 }

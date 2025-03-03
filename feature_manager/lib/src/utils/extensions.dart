@@ -37,5 +37,5 @@ extension FeatureBooleanExt<T> on Feature<T> {
   bool get isInteger => this is Feature<int>;
 
   /// Returns true if this Json Feature
-  bool get isJson => this is Feature<Object>;
+  bool get isJson => this is Feature<Map<String, dynamic>>;
 }

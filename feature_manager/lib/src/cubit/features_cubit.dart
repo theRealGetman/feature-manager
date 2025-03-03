@@ -13,19 +13,17 @@ class FeaturesCubit extends Cubit<FeaturesState> {
   final FeatureRepository repository;
   StreamSubscription<List<Feature<dynamic>>>? _featuresSubscription;
 
-  Future<void> getFeatures() async {
+  void getFeatures() {
     try {
       emit(FeaturesLoading());
 
-      final features = await repository.getFeatures();
+      final features = repository.getFeatures();
 
       if (features.isNotEmpty) {
         emit(FeaturesSuccess(features));
       } else {
         emit(FeaturesEmpty());
       }
-
-      _listenFeatures();
     } catch (e) {
       if (kDebugMode) {
         print('FeatureManager error >> $e');
@@ -40,30 +38,13 @@ class FeaturesCubit extends Cubit<FeaturesState> {
   ) async {
     try {
       await repository.putValue(feature, value);
+      getFeatures();
     } catch (e) {
       if (kDebugMode) {
         print('FeatureManager error >> $e');
       }
       emit(FeaturesError());
     }
-  }
-
-  void _listenFeatures() {
-    _featuresSubscription ??= repository.getFeaturesStream().distinct().listen(
-      (features) {
-        if (features.isNotEmpty) {
-          emit(FeaturesSuccess(features));
-        } else {
-          emit(FeaturesEmpty());
-        }
-      },
-      onError: (dynamic e) {
-        if (kDebugMode) {
-          print('FeatureManager error >> $e');
-        }
-        emit(FeaturesError());
-      },
-    );
   }
 
   @override
