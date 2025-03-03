@@ -67,7 +67,7 @@ class _DeveloperPreferencesScreenState extends State<DeveloperPreferencesScreen>
           } else if (featuresState is FeaturesError) {
             return const _Error();
           }
-          return Container();
+          return const SizedBox.shrink();
         },
       ),
     );
@@ -87,9 +87,7 @@ class _Success extends StatelessWidget {
         final preference = preferences[index];
         return _FeatureItem(
           preference,
-          onChanged: (newValue) {
-            cubit.changeFeature(preference, newValue);
-          },
+          onChanged: (newValue) => cubit.changeFeature(preference, newValue),
         );
       },
       itemCount: preferences.length,
